@@ -80,7 +80,7 @@ public class GameScreen implements Screen {
             block.x = 1000;
             block.y = 0;
             block.width = 70;
-            block.height = 180;
+            block.height = 144;
             blockBank.add(block);
             lastBlock = TimeUtils.nanoTime();
 
@@ -88,14 +88,14 @@ public class GameScreen implements Screen {
             block2.x = 1000;
             block2.y = 480 - 144;
             block2.width = 70;
-            block2.height = 180;
+            block2.height = 144;
             blockBank.add(block2);
             lastBlock = TimeUtils.nanoTime();
             }
 
             else if (random == 2) {
             blockLong = new Rectangle();
-            blockLong.x = 2000;
+            blockLong.x = 1000;
             blockLong.y = 0;
             blockLong.width = 70;
             blockLong.height = 200;
@@ -103,7 +103,7 @@ public class GameScreen implements Screen {
             lastBlock = TimeUtils.nanoTime();
 
             block88 = new Rectangle();
-            block88.x = 2000;
+            block88.x = 1000;
             block88.y = 480 - 88;
             block88.width = 70;
             block88.height = 88;
@@ -112,7 +112,7 @@ public class GameScreen implements Screen {
             }
             else {
                 blockLong = new Rectangle();
-                blockLong.x = 3000;
+                blockLong.x = 1000;
                 blockLong.y = 0;
                 blockLong.width = 70;
                 blockLong.height = 88;
@@ -120,7 +120,7 @@ public class GameScreen implements Screen {
                 lastBlock = TimeUtils.nanoTime();
 
                 block88 = new Rectangle();
-                block88.x = 3000;
+                block88.x = 1000;
                 block88.y = 480 - 200;
                 block88.width = 88;
                 block88.height = 200;
@@ -159,7 +159,7 @@ public class GameScreen implements Screen {
                 game.batch.draw(longImage, block.x, block.y);
             } else if (block.getHeight() == 88) {
                 game.batch.draw(imageShort, block.x, block.y);
-            }else if (block.getHeight() == 180){
+            }else {
                 game.batch.draw(blockImage, block.x, block.y);
             }
         }
