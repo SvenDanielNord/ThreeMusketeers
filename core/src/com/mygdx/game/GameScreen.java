@@ -25,6 +25,7 @@ public class GameScreen implements Screen {
     /**
      * bird image
      */
+    Texture background;
     Texture customerImage;
     Texture blockImage;
     Texture longImage;
@@ -47,6 +48,7 @@ public class GameScreen implements Screen {
         /**
          * Loading image (64*64) for customer
          */
+        background = new Texture(Gdx.files.internal("bgtest.png"));
         customerImage = new Texture(Gdx.files.internal("kund.png"));
         blockImage = new Texture(Gdx.files.internal("block.png"));
         longImage = new Texture(Gdx.files.internal("blockLong.png"));
@@ -151,6 +153,7 @@ public class GameScreen implements Screen {
          * Start new batch with instruction message to customer and star postion for box
          */
         game.batch.begin();
+        game.batch.draw(background,0,0);
         game.font.draw(game.batch, "Hoppa Hampus", 380, 480);
         game.batch.draw(customerImage, customer.x, customer.y, customer.width, customer.height);
 
@@ -201,7 +204,7 @@ public class GameScreen implements Screen {
             block.x -= (200 * Gdx.graphics.getDeltaTime());
 
             if (block.intersects(customer)) {
-                game.setScreen((new MainMenuScreen(game)));
+                game.setScreen((new DeathScreen(game)));
             }
 
         }
