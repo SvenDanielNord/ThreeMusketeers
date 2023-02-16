@@ -179,10 +179,10 @@ public class GameScreen implements Screen {
             customer.x = (int) (startPas.x - 64 / 2);
         }
         /**
-         * Input to jump
+         * Input to jump, press space key
          */
-        if (Gdx.input.isKeyPressed(62)) {
-            customer.y += 400 * Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            customer.y += 800 * Gdx.graphics.getDeltaTime();
 
             if (customer.y < 0)
                 customer.y = 0;
@@ -190,9 +190,9 @@ public class GameScreen implements Screen {
                 customer.y = 480 - 64;
         }
         /**
-         * Drop time for the bird
+         * Bird sinking time
          */
-        customer.y -= 10 * Gdx.graphics.getDeltaTime();
+        customer.y -= 150 * Gdx.graphics.getDeltaTime();
 
         if (TimeUtils.nanoTime() - lastBlock > 1000000000) {
             spawnBlocks();

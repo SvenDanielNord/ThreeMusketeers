@@ -36,10 +36,13 @@ public class MainMenuScreen implements Screen {
 
         game.batch.begin();
         game.font.draw(game.batch, "Flappy birb", 380, 220);
-        game.font.draw(game.batch, "Tap to play game", 380, 160);
+        game.font.draw(game.batch, "Press ENTER to play game", 380, 160);
         game.batch.end();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        /**
+         * Press enter to play game
+         */
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             game.setScreen((new GameScreen(game)));
             dispose();
         }
