@@ -40,7 +40,7 @@ public class MainMenuScreen implements Screen {
         game.batch.end();
 
         /**
-         * Press ENTER to play game
+         * Press enter to play game, space starting game direct
          */
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             game.setScreen((new GameScreen(game)));
