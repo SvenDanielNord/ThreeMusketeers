@@ -201,7 +201,7 @@ public class GameScreen implements Screen {
             block.x -= (200 * Gdx.graphics.getDeltaTime());
 
             if (block.intersects(customer)) {
-                game.setScreen((new GameScreen(game)));
+                game.setScreen((new MainMenuScreen(game)));
             }
 
         }
