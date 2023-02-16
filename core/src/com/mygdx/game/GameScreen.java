@@ -176,10 +176,10 @@ public class GameScreen implements Screen {
             customer.x = (int) (startPas.x - 64 / 2);
         }
         /**
-         * Input to jump
+         * Input to jump, press space key
          */
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            customer.y += 400 * Gdx.graphics.getDeltaTime();
+            customer.y += 800 * Gdx.graphics.getDeltaTime();
 
             if (customer.y < 0)
                 customer.y = 0;
