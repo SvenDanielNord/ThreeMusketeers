@@ -178,7 +178,7 @@ public class GameScreen implements Screen {
         /**
          * Input to jump
          */
-        if (Gdx.input.isKeyPressed(62)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             customer.y += 400 * Gdx.graphics.getDeltaTime();
 
             if (customer.y < 0)
