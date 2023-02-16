@@ -187,9 +187,9 @@ public class GameScreen implements Screen {
                 customer.y = 480 - 64;
         }
         /**
-         * Drop time for the bird
+         * Bird sinking time
          */
-        customer.y -= 10 * Gdx.graphics.getDeltaTime();
+        customer.y -= 150 * Gdx.graphics.getDeltaTime();
 
         if (TimeUtils.nanoTime() - lastBlock > 1000000000) {
             spawnBlocks();
