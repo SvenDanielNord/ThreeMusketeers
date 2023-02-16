@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
         /**
          * Loading image (64*64) for customer
          */
-        customerImage = new Texture(Gdx.files.internal("kund.png"));
+        customerImage = new Texture(Gdx.files.internal("Jumpy_Birb.png"));
         blockImage = new Texture(Gdx.files.internal("block.png"));
         longImage = new Texture(Gdx.files.internal("blockLong.png"));
         imageShort = new Texture(Gdx.files.internal("block88.png"));
@@ -61,7 +61,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         /**
-         * Creating player box and setting cooridates for it
+         * Creating player box and setting coordinates for it
          */
         customer = new Rectangle();
         customer.x = 800 / 2 - 64 / 2;
@@ -208,6 +208,8 @@ public class GameScreen implements Screen {
 
 
     }
+
+
 
     @Override
     public void resize(int width, int height) {
