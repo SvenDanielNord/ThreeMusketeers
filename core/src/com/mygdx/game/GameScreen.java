@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
          * Loading image (64*64) for customer
          */
         background = new Texture(Gdx.files.internal("bgtest.png"));
-        customerImage = new Texture(Gdx.files.internal("kund.png"));
+        customerImage = new Texture(Gdx.files.internal("Phoenix.gif"));
         blockImage = new Texture(Gdx.files.internal("block.png"));
         longImage = new Texture(Gdx.files.internal("blockLong.png"));
         imageShort = new Texture(Gdx.files.internal("block88.png"));
