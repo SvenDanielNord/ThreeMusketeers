@@ -159,7 +159,7 @@ public class GameScreen implements Screen {
          */
         game.batch.begin();
         game.batch.draw(background,0,0);
-        game.font.draw(game.batch, "Score: " + score, 380, 480);
+
         game.batch.draw(customerImage, customer.x, customer.y, customer.width, customer.height);
 
         for (Rectangle block : blockBank) {
@@ -171,7 +171,7 @@ public class GameScreen implements Screen {
                 game.batch.draw(blockImage, block.x, block.y);
             }
         }
-
+        game.font.draw(game.batch, "Score: " + score, 380, 480);
             game.batch.end();
         /**
          * Input to start the game
