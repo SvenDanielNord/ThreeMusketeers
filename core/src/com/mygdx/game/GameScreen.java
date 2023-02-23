@@ -39,6 +39,8 @@ public class GameScreen implements Screen {
 
     Array<Rectangle> blockBank;
     long lastBlock;
+    int score;
+
 
 
 
@@ -72,6 +74,9 @@ public class GameScreen implements Screen {
         customer.height = 64;
 
         blockBank = new Array<Rectangle>();
+
+        score = 0;
+
         createBlocks();
         spawnBlocks();
     }
@@ -154,7 +159,7 @@ public class GameScreen implements Screen {
          */
         game.batch.begin();
         game.batch.draw(background,0,0);
-        game.font.draw(game.batch, "Hoppa Hampus", 380, 480);
+        game.font.draw(game.batch, "Score: " + score, 380, 480);
         game.batch.draw(customerImage, customer.x, customer.y, customer.width, customer.height);
 
         for (Rectangle block : blockBank) {
@@ -195,6 +200,7 @@ public class GameScreen implements Screen {
         customer.y -= 150 * Gdx.graphics.getDeltaTime();
 
         if (TimeUtils.nanoTime() - lastBlock > 1000000000) {
+            score = score + 100;
             spawnBlocks();
         }
 
@@ -204,7 +210,7 @@ public class GameScreen implements Screen {
             block.x -= (200 * Gdx.graphics.getDeltaTime());
 
             if (block.intersects(customer)) {
-                game.setScreen((new DeathScreen(game)));
+                game.setScreen((new DeathScreen(game, score)));
             }
 
         }
