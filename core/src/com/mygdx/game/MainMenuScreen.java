@@ -5,18 +5,20 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class MainMenuScreen implements Screen {
 
     final FlappyBird game;
 
     OrthographicCamera camera;
+    long delay;
 
     public MainMenuScreen(FlappyBird Game) {
         this.game = Game;
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+        delay = TimeUtils.nanoTime();
     }
     @Override
     public void show() {
@@ -43,8 +45,10 @@ public class MainMenuScreen implements Screen {
          * Press space to play game
          */
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            game.setScreen((new GameScreen(game)));
-            dispose();
+            if (TimeUtils.nanoTime() - delay > 500000000) {
+                game.setScreen((new GameScreen(game)));
+                dispose();
+            }
         }
 
     }
