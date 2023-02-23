@@ -36,7 +36,7 @@ public class MainMenuScreen implements Screen {
 
         game.batch.begin();
         game.font.draw(game.batch, "Flappy birb", 380, 220);
-        game.font.draw(game.batch, "Press ENTER to play game", 380, 160);
+        game.font.draw(game.batch, "Press SPACE to play game", 380, 160);
         game.batch.end();
 
         /**
