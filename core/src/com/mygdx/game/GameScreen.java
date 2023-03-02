@@ -37,6 +37,9 @@ public class GameScreen implements Screen {
     long lastBlock;
     int score;
 
+    //highscore for this playing round
+    static int highscore;
+
 
 
 
@@ -199,7 +202,10 @@ public class GameScreen implements Screen {
             }
         }
 
-
+        //saving highscore if it's bigger than score
+        if (score > highscore) {
+            highscore = score;
+        }
     }
 
     @Override
@@ -229,5 +235,9 @@ public class GameScreen implements Screen {
         blockImage.dispose();
         imageShort.dispose();
         longImage.dispose();
+    }
+
+    public static int getHighscore() {
+        return highscore;
     }
 }
