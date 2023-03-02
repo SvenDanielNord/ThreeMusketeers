@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -14,8 +13,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 import java.awt.*;
 import java.util.Iterator;
-import java.util.Vector;
-import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameScreen implements Screen {
@@ -34,8 +31,7 @@ public class GameScreen implements Screen {
     Rectangle customer;
     Rectangle block;
     Rectangle block2;
-    Rectangle blockLong;
-    Rectangle block88;
+
 
     Array<Rectangle> blockBank;
     long lastBlock;
@@ -53,7 +49,7 @@ public class GameScreen implements Screen {
         background = new Texture(Gdx.files.internal("bgtest.png"));
         customerImage = new Texture(Gdx.files.internal("Phoenix.gif"));
         blockImage = new Texture(Gdx.files.internal("block.png"));
-        longImage = new Texture(Gdx.files.internal("blockLong.png"));
+        longImage = new Texture(Gdx.files.internal("Building.png"));
         imageShort = new Texture(Gdx.files.internal("block88.png"));
 
 
@@ -65,7 +61,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         /**
-         * Creating player box and setting cooridates for it
+         * Creating player box and setting coordinates for it
          */
         customer = new Rectangle();
         customer.x = 800 / 2 - 64 / 2;
@@ -77,63 +73,51 @@ public class GameScreen implements Screen {
 
         score = 0;
 
-        createBlocks();
-        spawnBlocks();
+
     }
         private void spawnBlocks() {
-            int random = ThreadLocalRandom.current().nextInt(4) + 1;
-            if (random == 1) {
             block = new Rectangle();
             block.x = 1000;
             block.y = 0;
-            block.width = 70;
-            block.height = 144;
-            blockBank.add(block);
-            lastBlock = TimeUtils.nanoTime();
 
             block2 = new Rectangle();
             block2.x = 1000;
             block2.y = 480 - 144;
-            block2.width = 70;
-            block2.height = 144;
-            blockBank.add(block2);
-            lastBlock = TimeUtils.nanoTime();
+
+            int random = ThreadLocalRandom.current().nextInt(4) + 1;
+            if (random == 1) {
+                block.width = 70;
+                block.height = 144;
+                block2.width = 70;
+                block2.height = 144;
             }
 
             else if (random == 2) {
-            blockLong = new Rectangle();
-            blockLong.x = 1000;
-            blockLong.y = 0;
-            blockLong.width = 70;
-            blockLong.height = 200;
-            blockBank.add(blockLong);
-            lastBlock = TimeUtils.nanoTime();
+            block.x = 1000;
+            block.y = 480 - 211;
+            block.width = 104;
+            block.height = 311;
 
-            block88 = new Rectangle();
-            block88.x = 1000;
-            block88.y = 480 - 88;
-            block88.width = 70;
-            block88.height = 88;
-            blockBank.add(block88);
-            lastBlock = TimeUtils.nanoTime();
+            block2.x = 1000;
+            block2.y = 0 - 211;
+            block2.width = 104;
+            block2.height = 311;
+
             }
             else {
-                blockLong = new Rectangle();
-                blockLong.x = 1000;
-                blockLong.y = 0;
-                blockLong.width = 70;
-                blockLong.height = 88;
-                blockBank.add(blockLong);
-                lastBlock = TimeUtils.nanoTime();
+                block.x = 1000;
+                block.y = 0 - 111;
+                block.width = 104;
+                block.height = 311;
 
-                block88 = new Rectangle();
-                block88.x = 1000;
-                block88.y = 480 - 200;
-                block88.width = 88;
-                block88.height = 200;
-                blockBank.add(block88);
-                lastBlock = TimeUtils.nanoTime();
+                block2.x = 1000;
+                block2.y = 480 - 111;
+                block2.width = 104;
+                block2.height = 311;
             }
+            blockBank.add(block);
+            blockBank.add(block2);
+            lastBlock = TimeUtils.nanoTime();
         }
 
         public void createBlocks() {
@@ -155,7 +139,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         /**
-         * Start new batch with instruction message to customer and star postion for box
+         * Start new batch with instruction message to customer and star position for box
          */
         game.batch.begin();
         game.batch.draw(background,0,0);
@@ -163,10 +147,8 @@ public class GameScreen implements Screen {
         game.batch.draw(customerImage, customer.x, customer.y, customer.width, customer.height);
 
         for (Rectangle block : blockBank) {
-            if (block.getHeight() == 200) {
+            if (block.getHeight() == 311) {
                 game.batch.draw(longImage, block.x, block.y);
-            } else if (block.getHeight() == 88) {
-                game.batch.draw(imageShort, block.x, block.y);
             }else {
                 game.batch.draw(blockImage, block.x, block.y);
             }
@@ -186,7 +168,7 @@ public class GameScreen implements Screen {
         /**
          * Input to jump, press space key
          */
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched(Input.Buttons.LEFT)) {
             customer.y += 800 * Gdx.graphics.getDeltaTime();
 
             if (customer.y < 0)
@@ -212,7 +194,9 @@ public class GameScreen implements Screen {
             if (block.intersects(customer)) {
                 game.setScreen((new DeathScreen(game, score)));
             }
-
+            if (block.getX() < -150) {
+                iter.remove();
+            }
         }
 
 
