@@ -10,8 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-
-import java.awt.*;
+import com.badlogic.gdx.math.Rectangle;
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -41,8 +40,6 @@ public class GameScreen implements Screen {
     static int highscore;
 
 
-
-
     public GameScreen(FlappyBird game) {
         this.game = game;
 
@@ -54,7 +51,6 @@ public class GameScreen implements Screen {
         blockImage = new Texture(Gdx.files.internal("block.png"));
         longImage = new Texture(Gdx.files.internal("Building.png"));
         imageShort = new Texture(Gdx.files.internal("block88.png"));
-
 
 
         /**
@@ -78,24 +74,23 @@ public class GameScreen implements Screen {
 
 
     }
-        private void spawnBlocks() {
-            block = new Rectangle();
-            block.x = 1000;
-            block.y = 0;
 
-            block2 = new Rectangle();
-            block2.x = 1000;
-            block2.y = 480 - 144;
+    private void spawnBlocks() {
+        block = new Rectangle();
+        block.x = 1000;
+        block.y = 0;
 
-            int random = ThreadLocalRandom.current().nextInt(4) + 1;
-            if (random == 1) {
-                block.width = 70;
-                block.height = 144;
-                block2.width = 70;
-                block2.height = 144;
-            }
+        block2 = new Rectangle();
+        block2.x = 1000;
+        block2.y = 480 - 144;
 
-            else if (random == 2) {
+        int random = ThreadLocalRandom.current().nextInt(3) + 1;
+        if (random == 1) {
+            block.width = 70;
+            block.height = 144;
+            block2.width = 70;
+            block2.height = 144;
+        } else if (random == 2) {
             block.x = 1000;
             block.y = 480 - 211;
             block.width = 104;
@@ -106,25 +101,25 @@ public class GameScreen implements Screen {
             block2.width = 104;
             block2.height = 311;
 
-            }
-            else {
-                block.x = 1000;
-                block.y = 0 - 111;
-                block.width = 104;
-                block.height = 311;
+        } else {
+            block.x = 1000;
+            block.y = 0 - 111;
+            block.width = 104;
+            block.height = 311;
 
-                block2.x = 1000;
-                block2.y = 480 - 111;
-                block2.width = 104;
-                block2.height = 311;
-            }
-            blockBank.add(block);
-            blockBank.add(block2);
-            lastBlock = TimeUtils.nanoTime();
+            block2.x = 1000;
+            block2.y = 480 - 111;
+            block2.width = 104;
+            block2.height = 311;
         }
+        blockBank.add(block);
+        blockBank.add(block2);
+        lastBlock = TimeUtils.nanoTime();
+    }
 
-        public void createBlocks() {
-        }
+    public void createBlocks() {
+    }
+
     @Override
     public void show() {
 
@@ -145,19 +140,19 @@ public class GameScreen implements Screen {
          * Start new batch with instruction message to customer and star position for box
          */
         game.batch.begin();
-        game.batch.draw(background,0,0);
+        game.batch.draw(background, 0, 0);
 
         game.batch.draw(customerImage, customer.x, customer.y, customer.width, customer.height);
 
         for (Rectangle block : blockBank) {
             if (block.getHeight() == 311) {
                 game.batch.draw(longImage, block.x, block.y);
-            }else {
+            } else {
                 game.batch.draw(blockImage, block.x, block.y);
             }
         }
         game.font.draw(game.batch, "Score: " + score, 380, 480);
-            game.batch.end();
+        game.batch.end();
         /**
          * Input to start the game
          */
@@ -194,7 +189,7 @@ public class GameScreen implements Screen {
             Rectangle block = iter.next();
             block.x -= (200 * Gdx.graphics.getDeltaTime());
 
-            if (block.intersects(customer)) {
+            if (block.overlaps(customer)) {
                 game.setScreen((new DeathScreen(game, score)));
             }
             if (block.getX() < -150) {
@@ -202,7 +197,7 @@ public class GameScreen implements Screen {
             }
         }
 
-        //saving highscore if it's bigger than score
+        //saving high score if it's bigger than score
         if (score > highscore) {
             highscore = score;
         }
