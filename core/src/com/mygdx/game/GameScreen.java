@@ -23,12 +23,12 @@ public class GameScreen implements Screen {
      * bird image
      */
     Texture background;
-    Texture customerImage;
+    Texture phoenixImage;
     Texture blockImage;
     Texture longImage;
     Texture imageShort;
     OrthographicCamera camera;
-    Rectangle customer;
+    Rectangle phoenix;
     Rectangle block;
     Rectangle block2;
 
@@ -50,7 +50,7 @@ public class GameScreen implements Screen {
          * Loading image (64*64) for customer
          */
         background = new Texture(Gdx.files.internal("bgtest.png"));
-        customerImage = new Texture(Gdx.files.internal("Phoenix.gif"));
+        phoenixImage = new Texture(Gdx.files.internal("Phoenix.gif"));
         blockImage = new Texture(Gdx.files.internal("block.png"));
         longImage = new Texture(Gdx.files.internal("Building.png"));
         imageShort = new Texture(Gdx.files.internal("block88.png"));
@@ -66,11 +66,11 @@ public class GameScreen implements Screen {
         /**
          * Creating player box and setting coordinates for it
          */
-        customer = new Rectangle();
-        customer.x = 800 / 2 - 64 / 2;
-        customer.y = 220;
-        customer.width = 64;
-        customer.height = 64;
+        phoenix = new Rectangle();
+        phoenix.x = 800 / 2 - 64 / 2;
+        phoenix.y = 220;
+        phoenix.width = 64;
+        phoenix.height = 64;
 
         blockBank = new Array<Rectangle>();
 
@@ -147,7 +147,7 @@ public class GameScreen implements Screen {
         game.batch.begin();
         game.batch.draw(background,0,0);
 
-        game.batch.draw(customerImage, customer.x, customer.y, customer.width, customer.height);
+        game.batch.draw(phoenixImage, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
 
         for (Rectangle block : blockBank) {
             if (block.getHeight() == 311) {
@@ -166,23 +166,23 @@ public class GameScreen implements Screen {
             Vector3 startPas = new Vector3();
             startPas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(startPas);
-            customer.x = (int) (startPas.x - 64 / 2);
+            phoenix.x = (int) (startPas.x - 64 / 2);
         }
         /**
          * Input to jump, press space key
          */
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched(Input.Buttons.LEFT)) {
-            customer.y += 800 * Gdx.graphics.getDeltaTime();
+            phoenix.y += 800 * Gdx.graphics.getDeltaTime();
 
-            if (customer.y < 0)
-                customer.y = 0;
-            if (customer.y > 480 - 64)
-                customer.y = 480 - 64;
+            if (phoenix.y < 0)
+                phoenix.y = 0;
+            if (phoenix.y > 480 - 64)
+                phoenix.y = 480 - 64;
         }
         /**
          * Bird sinking time
          */
-        customer.y -= 150 * Gdx.graphics.getDeltaTime();
+        phoenix.y -= 150 * Gdx.graphics.getDeltaTime();
 
         if (TimeUtils.nanoTime() - lastBlock > 1000000000) {
             score = score + 100;
@@ -194,7 +194,7 @@ public class GameScreen implements Screen {
             Rectangle block = iter.next();
             block.x -= (200 * Gdx.graphics.getDeltaTime());
 
-            if (block.intersects(customer)) {
+            if (block.intersects(phoenix)) {
                 game.setScreen((new DeathScreen(game, score)));
             }
             if (block.getX() < -150) {
@@ -231,7 +231,7 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        customerImage.dispose();
+        phoenixImage.dispose();
         blockImage.dispose();
         imageShort.dispose();
         longImage.dispose();
