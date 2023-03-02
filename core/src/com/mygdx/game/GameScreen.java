@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.math.Rectangle;
+
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -77,40 +78,32 @@ public class GameScreen implements Screen {
 
     private void spawnBlocks() {
         block = new Rectangle();
-        block.x = 1000;
-        block.y = 0;
+        block.width = 104;
+        block.height = 311;
 
         block2 = new Rectangle();
-        block2.x = 1000;
-        block2.y = 480 - 144;
+        block2.width = 104;
+        block2.height = 311;
 
         int random = ThreadLocalRandom.current().nextInt(3) + 1;
+
         if (random == 1) {
-            block.width = 70;
-            block.height = 144;
-            block2.width = 70;
-            block2.height = 144;
+            block.x = 1000;
+            block.y = 0 - 150;
+            block2.x = 1000;
+            block2.y = 480 - 144;
         } else if (random == 2) {
             block.x = 1000;
             block.y = 480 - 211;
-            block.width = 104;
-            block.height = 311;
-
             block2.x = 1000;
             block2.y = 0 - 211;
-            block2.width = 104;
-            block2.height = 311;
 
         } else {
             block.x = 1000;
             block.y = 0 - 111;
-            block.width = 104;
-            block.height = 311;
-
             block2.x = 1000;
             block2.y = 480 - 111;
-            block2.width = 104;
-            block2.height = 311;
+
         }
         blockBank.add(block);
         blockBank.add(block2);
@@ -145,12 +138,9 @@ public class GameScreen implements Screen {
         game.batch.draw(customerImage, customer.x, customer.y, customer.width, customer.height);
 
         for (Rectangle block : blockBank) {
-            if (block.getHeight() == 311) {
-                game.batch.draw(longImage, block.x, block.y);
-            } else {
-                game.batch.draw(blockImage, block.x, block.y);
-            }
+            game.batch.draw(longImage, block.x, block.y);
         }
+
         game.font.draw(game.batch, "Score: " + score, 380, 480);
         game.batch.end();
         /**
@@ -201,6 +191,7 @@ public class GameScreen implements Screen {
         if (score > highscore) {
             highscore = score;
         }
+
     }
 
     @Override
