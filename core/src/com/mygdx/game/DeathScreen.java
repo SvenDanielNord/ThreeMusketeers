@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import static com.mygdx.game.GameScreen.getHighscore;
+//import static com.mygdx.game.GameScreen.getHighscore;
 
 public class DeathScreen implements Screen {
 
@@ -25,7 +25,7 @@ public class DeathScreen implements Screen {
     long screenStart;
     BitmapFont endFont;
     int score;
-    int highscore = 0;
+    static int highscore = 0;
 
     public DeathScreen(FlappyBird game, int score) {
         this.game = game;
@@ -60,8 +60,10 @@ public class DeathScreen implements Screen {
         game.font.draw(game.batch, "You Died!", 500, 380);
         game.font.draw(game.batch, "Your score was: " + score, 500, 380);
 
-        //writing highscore for this playing round on screen
-        game.font.draw(game.batch, "Your highscore is: " + getHighscore(), 500, 300);
+        //writing high score for this playing round on screen
+        game.font.draw(game.batch, "Your highscore is: " + highscore, 500, 300);
+        //writing best score ever
+        game.font.draw(game.batch, "Your best score ever is: " + GameScreen.allTimeScore, 500, 220);
         game.batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && TimeUtils.nanoTime() - screenStart > 500000000) {

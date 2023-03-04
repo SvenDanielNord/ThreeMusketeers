@@ -12,7 +12,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.io.*;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameScreen implements Screen {
@@ -38,7 +40,9 @@ public class GameScreen implements Screen {
     int score;
 
     //highscore for this playing round
-    static int highscore;
+    static int highScore;
+
+    static int allTimeScore;
 
 
     public GameScreen(FlappyBird game) {
@@ -118,6 +122,10 @@ public class GameScreen implements Screen {
 
     }
 
+    public int getHighScoreAllTime() {
+        return allTimeScore;
+    }
+
     @Override
     public void render(float delta) {
         /**
@@ -189,8 +197,32 @@ public class GameScreen implements Screen {
         }
 
         //saving high score if it's bigger than score
-        if (score > highscore) {
-            highscore = score;
+        if (score > highScore) {
+            highScore = score;
+        }
+        //writing and reading all-time high score to/from a file
+        try {
+            Scanner scanner = new Scanner(new File("highscore.txt"));
+            while (scanner.hasNextLine()) {
+                allTimeScore = Integer.parseInt(scanner.nextLine());
+            }
+        }
+        catch (IOException ex) {
+            System.out.println("Something went wrong: " + ex.getMessage());
+        }
+
+        //writing all-time high score to a file
+        if(highScore > allTimeScore) {
+            allTimeScore = highScore;
+
+            try {
+                FileWriter writer = new FileWriter("highscore.txt");
+                writer.write(Integer.toString(allTimeScore));
+                writer.close();
+            }
+            catch (IOException ex) {
+                System.out.println("Something went wrong: " + ex.getMessage());
+            }
         }
 
     }
@@ -224,7 +256,8 @@ public class GameScreen implements Screen {
         longImage.dispose();
     }
 
-    public static int getHighscore() {
-        return highscore;
+    public static int getHighScore() {
+        return highScore;
     }
+
 }
