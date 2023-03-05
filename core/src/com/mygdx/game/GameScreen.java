@@ -89,6 +89,13 @@ public class GameScreen implements Screen {
         block2.width = 104;
         block2.height = 311;
 
+        setBlockPosition();
+        blockBank.add(block);
+        blockBank.add(block2);
+        lastBlock = TimeUtils.nanoTime();
+    }
+
+    private void setBlockPosition() {
         int random = ThreadLocalRandom.current().nextInt(3) + 1;
 
         if (random == 1) {
@@ -109,11 +116,7 @@ public class GameScreen implements Screen {
             block2.y = 480 - 111;
 
         }
-        blockBank.add(block);
-        blockBank.add(block2);
-        lastBlock = TimeUtils.nanoTime();
     }
-
 
 
     public void createBlocks() {
