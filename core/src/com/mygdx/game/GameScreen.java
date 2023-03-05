@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.utils.Levels;
 
 import java.io.*;
 import java.util.Iterator;
@@ -33,11 +34,15 @@ public class GameScreen implements Screen {
     Rectangle phoenix;
     Rectangle block;
     Rectangle block2;
+    Levels level;
+
 
 
     Array<Rectangle> blockBank;
     long lastBlock;
+    long speed;
     int score;
+
 
     //highscore for this playing round
     static int highScore;
@@ -45,8 +50,18 @@ public class GameScreen implements Screen {
     static int allTimeScore;
 
 
-    public GameScreen(FlappyBird game) {
+    public GameScreen(FlappyBird game, Levels level) {
         this.game = game;
+        this.level = level;
+
+        if (level == Levels.EASY){
+            speed = 100L;
+        }else if (level == Levels.HARD){
+            speed = 400L;
+        }else {
+            speed = 200L;
+        }
+
 
         /**
          * Loading image (64*64) for customer
@@ -190,7 +205,7 @@ public class GameScreen implements Screen {
         Iterator<Rectangle> iter = blockBank.iterator();
         while (iter.hasNext()) {
             Rectangle block = iter.next();
-            block.x -= (200 * Gdx.graphics.getDeltaTime());
+            block.x -= (speed * Gdx.graphics.getDeltaTime());
 
             if (block.overlaps(phoenix)) {
 
