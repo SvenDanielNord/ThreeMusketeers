@@ -61,7 +61,7 @@ public class GameScreen implements Screen {
             spawnTime = 2000000000L;
         }else if (level == Levels.HARD){
             speed = 400L;
-            spawnTime = 500000000L;
+            spawnTime = 400000000L;
         }else {
             speed = 200L;
             spawnTime = 1000000000L;
