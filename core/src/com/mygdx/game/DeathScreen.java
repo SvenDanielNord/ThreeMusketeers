@@ -57,13 +57,13 @@ public class DeathScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         game.batch.draw(region,0,0);
-        game.font.draw(game.batch, "You Died!", 500, 380);
-        game.font.draw(game.batch, "Your score was: " + score, 500, 380);
+        game.fireFont.draw(game.batch, "You Died!", 400, 500);
+        game.fireFont.draw(game.batch, "Your score was: " + score, 500, 380);
 
         //writing high score for this playing round on screen
-        game.font.draw(game.batch, "Your highscore is: " + highscore, 500, 300);
+        game.fireFont.draw(game.batch, "Your highscore is: " + highscore, 500, 300);
         //writing best score ever
-        game.font.draw(game.batch, "Your best score ever is: " + GameScreen.allTimeScore, 500, 220);
+        game.fireFont.draw(game.batch, "Your best score ever is: " + GameScreen.allTimeScore, 500, 220);
         game.batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && TimeUtils.nanoTime() - screenStart > 500000000) {

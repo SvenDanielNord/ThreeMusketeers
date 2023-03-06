@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -31,6 +32,7 @@ public class MainMenuScreen implements Screen {
     Rectangle boxMedium;
     Rectangle boxEasy;
 
+
     public MainMenuScreen(FlappyBird Game) {
         this.game = Game;
         camera = new OrthographicCamera();
@@ -46,6 +48,7 @@ public class MainMenuScreen implements Screen {
         boxMedium = new Rectangle(250, 190, 100, 40);
         boxEasy = new Rectangle(250, 140, 100, 40);
         level = Levels.MEDIUM;
+
 
     }
 
@@ -66,8 +69,8 @@ public class MainMenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.font.draw(game.batch, "Jumpy Birb", 380, 220);
-        game.font.draw(game.batch, "Press SPACE to play game", 380, 160);
+        game.fireFont.draw(game.batch, "Jumpy Birb", 380, 220);
+        game.fireFont.draw(game.batch, "Press SPACE to play game", 380, 160);
         int x = 800 / 2 - buttonWidth / 2;
 
         if (level == Levels.MEDIUM){

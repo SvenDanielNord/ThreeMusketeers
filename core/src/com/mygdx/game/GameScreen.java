@@ -174,7 +174,7 @@ public class GameScreen implements Screen {
             game.batch.draw(longImage, block.x, block.y);
         }
 
-        game.font.draw(game.batch, "Score: " + score, 380, 480);
+        game.fireFont.draw(game.batch, "Score: " + score, 380, 480);
         game.batch.end();
         /**
          * Input to start the game

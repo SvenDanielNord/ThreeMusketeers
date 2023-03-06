@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class FlappyBird extends Game {
 	SpriteBatch batch;
-	public BitmapFont font;
+	public BitmapFont fireFont;
 
 	/**
 	 *Creating new Sprite batch and font to make it possible to control this screen
@@ -17,7 +18,7 @@ public class FlappyBird extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		font = new BitmapFont();
+		fireFont = new BitmapFont(Gdx.files.internal("bitfont.fnt"));
 		this.setScreen(new MainMenuScreen(this));
 	}
 
@@ -29,6 +30,6 @@ public class FlappyBird extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		font.dispose();
+		fireFont.dispose();
 	}
 }
