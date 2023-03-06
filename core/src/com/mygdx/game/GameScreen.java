@@ -35,10 +35,6 @@ public class GameScreen implements Screen {
     Rectangle block;
     Rectangle block2;
     Levels level;
-
-
-
-
     Array<Rectangle> blockBank;
     long lastBlock;
     long speed;
@@ -182,7 +178,7 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isTouched()) {
             Vector3 startPas = new Vector3();
-            startPas.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            startPas.set(540, 220  , 0);
             camera.unproject(startPas);
             phoenix.x = (int) (startPas.x - 64 / 2);
         }
