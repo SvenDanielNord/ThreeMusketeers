@@ -45,6 +45,7 @@ public class MainMenuScreen implements Screen {
         boxHard = new Rectangle(250, 240, 100, 40);
         boxMedium = new Rectangle(250, 190, 100, 40);
         boxEasy = new Rectangle(250, 140, 100, 40);
+        level = Levels.MEDIUM;
 
     }
 
@@ -68,32 +69,37 @@ public class MainMenuScreen implements Screen {
         game.font.draw(game.batch, "Jumpy Birb", 380, 220);
         game.font.draw(game.batch, "Press SPACE to play game", 380, 160);
         int x = 800 / 2 - buttonWidth / 2;
-        if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 220 - buttonHeight && 480 - Gdx.input.getY() > 120 ) {
-            game.batch.draw(activatedHard, buttonX, 240);
-        } else {
-            game.batch.draw(hard, buttonX, 240);
-            if (Gdx.input.isTouched()){
-                level = Levels.HARD;
-            }
-        }
-        if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 150 - buttonHeight && 480 - Gdx.input.getY() > 50 ) {
-            game.batch.draw(activatedMedium, buttonX, 190);
 
-            if (Gdx.input.isTouched()){
-                level = Levels.MEDIUM;
-            }
-        } else {
+        if (level == Levels.MEDIUM){
+            game.batch.draw(activatedMedium, buttonX, 190);
+        }else {
             game.batch.draw(medium, buttonX, 190);
         }
-        if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 70 - buttonHeight && 480 - Gdx.input.getY() > -30 ) {
+        if (level == Levels.HARD){
+            game.batch.draw(activatedHard, buttonX, 240);
+        }else {
+            game.batch.draw(hard, buttonX, 240);
+        }if (level == Levels.EASY){
             game.batch.draw(activatedEasy, buttonX, 140);
-
-            if (Gdx.input.isTouched()){
-                level = Levels.EASY;
-            }
-        } else {
+        }else {
             game.batch.draw(easy, buttonX, 140);
         }
+
+        if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 220 - buttonHeight && 480 - Gdx.input.getY() > 120 ) {
+            if (Gdx.input.isTouched())
+            level = Levels.HARD;
+        }
+
+        if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 150 - buttonHeight && 480 - Gdx.input.getY() > 50) {
+            if (Gdx.input.isTouched())
+            level = Levels.MEDIUM;
+        }
+
+        if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 70 - buttonHeight && 480 - Gdx.input.getY() > -30) {
+            if (Gdx.input.isTouched())
+            level = Levels.EASY;
+        }
+
 
 
 
