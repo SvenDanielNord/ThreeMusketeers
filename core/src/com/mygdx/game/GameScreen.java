@@ -38,9 +38,11 @@ public class GameScreen implements Screen {
 
 
 
+
     Array<Rectangle> blockBank;
     long lastBlock;
     long speed;
+    long spawnTime;
     int score;
 
 
@@ -56,10 +58,13 @@ public class GameScreen implements Screen {
 
         if (level == Levels.EASY){
             speed = 100L;
+            spawnTime = 2000000000L;
         }else if (level == Levels.HARD){
             speed = 400L;
+            spawnTime = 500000000L;
         }else {
             speed = 200L;
+            spawnTime = 1000000000L;
         }
 
 
@@ -197,7 +202,7 @@ public class GameScreen implements Screen {
          */
         phoenix.y -= 150 * Gdx.graphics.getDeltaTime();
 
-        if (TimeUtils.nanoTime() - lastBlock > 1000000000) {
+        if (TimeUtils.nanoTime() - lastBlock > spawnTime) {
             score = score + 100;
             spawnBlocks();
         }
