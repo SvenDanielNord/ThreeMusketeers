@@ -27,7 +27,6 @@ public class MainMenuScreen implements Screen {
     Texture activatedMedium;
     Texture activatedEasy;
     Texture activatedHard;
-
     Rectangle boxHard;
     Rectangle boxMedium;
     Rectangle boxEasy;
@@ -64,7 +63,7 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 50, 1);     //changing background image
+        ScreenUtils.clear(0, 0, 0, 1);     //changing background image
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
