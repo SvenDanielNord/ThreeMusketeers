@@ -5,13 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.utils.Levels;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 
 import java.io.*;
 import java.util.Iterator;
@@ -21,10 +25,15 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GameScreen implements Screen {
 
     final FlappyBird game;
+    Animation<TextureRegion> flapAnimation;
+
+
+
     SpriteBatch batch;
     /**
      * bird image
      */
+    Texture flapSheet;
     Texture background;
     Texture phoenixImage;
     Texture blockImage;
@@ -39,7 +48,12 @@ public class GameScreen implements Screen {
     long lastBlock;
     long speed;
     long spawnTime;
+    final int phoenixCols = 2;
+    final int phoenixRows = 1;
+
     int score;
+    int flap;
+    float stateTime;
 
 
     //highscore for this playing round
@@ -64,6 +78,20 @@ public class GameScreen implements Screen {
         }
 
 
+
+        flapSheet = new Texture(Gdx.files.internal("Jumpy_Birb.png"));
+        TextureRegion[][] tmp = TextureRegion.split(flapSheet,flapSheet.getWidth()/ phoenixCols, flapSheet.getHeight()/phoenixRows);
+        TextureRegion[] flapFrames = new TextureRegion[phoenixCols* phoenixRows];
+        int index = 0;
+        for (int i = 0; i < phoenixRows; i++) {
+            for (int j = 0; j < phoenixCols; j++) {
+                flapFrames[index++] = tmp[i][j];
+            }
+        }
+            flapAnimation = new Animation<TextureRegion>(0.25f, flapFrames);
+
+            stateTime = 0f;
+
         /**
          * Loading image (64*64) for customer
          */
@@ -85,9 +113,9 @@ public class GameScreen implements Screen {
          */
         phoenix = new Rectangle();
         phoenix.x = 800 / 2 - 64 / 2;
-        phoenix.y = 220;
-        phoenix.width = 64;
-        phoenix.height = 64;
+        phoenix.y = 220L;
+        phoenix.width = 60;
+        phoenix.height = 60;
 
         blockBank = new Array<Rectangle>();
 
@@ -135,9 +163,6 @@ public class GameScreen implements Screen {
     }
 
 
-    public void createBlocks() {
-    }
-
     @Override
     public void show() {
 
@@ -152,7 +177,9 @@ public class GameScreen implements Screen {
         /**
          * Setting new color for background
          */
+
         ScreenUtils.clear(0, 50, 0, 1);
+        stateTime += Gdx.graphics.getDeltaTime();
 
         camera.update();
 
@@ -161,10 +188,12 @@ public class GameScreen implements Screen {
         /**
          * Start new batch with instruction message to customer and star position for box
          */
+        TextureRegion currentFrame = flapAnimation.getKeyFrame(stateTime,true);
         game.batch.begin();
         game.batch.draw(background, 0, 0);
 
-        game.batch.draw(phoenixImage, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
+        game.batch.draw(currentFrame,phoenix.x + 4, phoenix.y + 4,phoenix.getWidth(),phoenix.getHeight());
+        //game.batch.draw(phoenixImage, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
 
         for (Rectangle block : blockBank) {
             game.batch.draw(longImage, block.x, block.y);
@@ -275,6 +304,7 @@ public class GameScreen implements Screen {
         blockImage.dispose();
         imageShort.dispose();
         longImage.dispose();
+        background.dispose();
     }
 
     public static int getHighScore() {
