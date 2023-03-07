@@ -60,7 +60,7 @@ public class GameScreen implements Screen {
             spawnTime = 400000000L;
         }else {
             speed = 200L;
-            spawnTime = 1000000000L;
+            spawnTime = 1500000000L;
         }
 
 
@@ -116,20 +116,20 @@ public class GameScreen implements Screen {
 
         if (random == 1) {
             block.x = 1000;
-            block.y = 0 - 150;
+            block.y = 0 - 155;
             block2.x = 1000;
-            block2.y = 480 - 144;
+            block2.y = 480 - 155;
         } else if (random == 2) {
             block.x = 1000;
-            block.y = 480 - 211;
+            block.y = 480 - 260;
             block2.x = 1000;
-            block2.y = 0 - 211;
+            block2.y = 0 - 251 ;
 
         } else {
             block.x = 1000;
-            block.y = 0 - 111;
+            block.y = 0 - 91;
             block2.x = 1000;
-            block2.y = 480 - 111;
+            block2.y = 480 - 91;
 
         }
     }
