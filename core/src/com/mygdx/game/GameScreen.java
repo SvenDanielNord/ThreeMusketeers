@@ -35,6 +35,7 @@ public class GameScreen implements Screen {
      */
     Texture flapSheet;
     Texture background;
+    Texture background2;
     Texture phoenixImage;
     Texture blockImage;
     Texture longImage;
@@ -45,15 +46,19 @@ public class GameScreen implements Screen {
     Rectangle block2;
     Levels level;
     Array<Rectangle> blockBank;
+    Array<Texture> textureBank;
     long lastBlock;
     long speed;
     long spawnTime;
     final int phoenixCols = 2;
     final int phoenixRows = 1;
+    float backgroundMove;
+    float backgroundMove2;
 
     int score;
     int flap;
     float stateTime;
+
 
 
     //highscore for this playing round
@@ -68,10 +73,10 @@ public class GameScreen implements Screen {
 
         if (level == Levels.EASY){
             speed = 100L;
-            spawnTime = 2000000000L;
+            spawnTime = 4000000000L;
         }else if (level == Levels.HARD){
-            speed = 400L;
-            spawnTime = 400000000L;
+            speed = 350L;
+            spawnTime = 1000000000L;
         }else {
             speed = 200L;
             spawnTime = 1500000000L;
@@ -95,11 +100,14 @@ public class GameScreen implements Screen {
         /**
          * Loading image (64*64) for customer
          */
-        background = new Texture(Gdx.files.internal("bgtest.png"));
         phoenixImage = new Texture(Gdx.files.internal("Phoenix.gif"));
         blockImage = new Texture(Gdx.files.internal("block.png"));
         longImage = new Texture(Gdx.files.internal("Building.png"));
         imageShort = new Texture(Gdx.files.internal("block88.png"));
+        background = new Texture(Gdx.files.internal("bgtest.png"));
+        background2 = new Texture(Gdx.files.internal("bgtest.png"));
+        backgroundMove = 0;
+        backgroundMove2 = 1080;
 
 
         /**
@@ -117,12 +125,16 @@ public class GameScreen implements Screen {
         phoenix.width = 60;
         phoenix.height = 60;
 
+
+
+
         blockBank = new Array<Rectangle>();
 
         score = 0;
 
 
     }
+
 
     private void spawnBlocks() {
         block = new Rectangle();
@@ -190,7 +202,14 @@ public class GameScreen implements Screen {
          */
         TextureRegion currentFrame = flapAnimation.getKeyFrame(stateTime,true);
         game.batch.begin();
-        game.batch.draw(background, 0, 0);
+        game.batch.draw(background,backgroundMove,0);
+        game.batch.draw(background,backgroundMove2,0);
+        if (backgroundMove < -1080){
+            backgroundMove = 0;
+            backgroundMove2 = 1080;
+
+        }
+
 
         game.batch.draw(currentFrame,phoenix.x + 4, phoenix.y + 4,phoenix.getWidth(),phoenix.getHeight());
         //game.batch.draw(phoenixImage, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
@@ -226,6 +245,8 @@ public class GameScreen implements Screen {
          * Bird sinking time
          */
         phoenix.y -= 150 * Gdx.graphics.getDeltaTime();
+        backgroundMove -= 100 * Gdx.graphics.getDeltaTime();
+        backgroundMove2 -= 100 * Gdx.graphics.getDeltaTime();
 
         if (TimeUtils.nanoTime() - lastBlock > spawnTime) {
             score = score + 100;
