@@ -1,0 +1,83 @@
+package com.mygdx.game;
+
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
+
+
+public class Animation implements Screen {
+    Array<TextureRegion> frames;
+    float maxFrameTime;
+    float currentFrameTime;
+    int frameCount;
+    int frame;
+
+
+    public Animation(TextureRegion region, int frameCount, float cycleTime){
+        frames = new Array<TextureRegion>();
+        TextureRegion temp;
+        int frameWidth = region.getRegionWidth() / frameCount;
+        for(int i = 0; i < frameCount; i++){
+            temp = new TextureRegion(region, i * frameWidth, 0, frameWidth, region.getRegionHeight());
+            frames.add(temp);
+        }
+        this.frameCount = frameCount;
+        maxFrameTime = cycleTime / frameCount;
+        frame = 0;
+    }
+
+    public void update(float dt){
+        currentFrameTime += dt;
+        if(currentFrameTime > maxFrameTime){
+            frame++;
+            currentFrameTime = 0;
+        }
+        if(frame >= frameCount)
+            frame = 0;
+
+    }
+
+    public void flip(){
+        for(TextureRegion region : frames)
+            region.flip(true, false);
+    }
+
+    public TextureRegion getFrame(){
+        return frames.get(frame);
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float delta) {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+}
