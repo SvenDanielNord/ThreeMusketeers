@@ -234,7 +234,7 @@ public class GameScreen implements Screen {
          * Input to jump, press space key
          */
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched(Input.Buttons.LEFT)) {
-            phoenix.y += 800 * Gdx.graphics.getDeltaTime();
+            phoenix.y += 500 * Gdx.graphics.getDeltaTime();
 
             if (phoenix.y < 0)
                 phoenix.y = 0;
@@ -244,7 +244,7 @@ public class GameScreen implements Screen {
         /**
          * Bird sinking time
          */
-        phoenix.y -= 150 * Gdx.graphics.getDeltaTime();
+        phoenix.y -= 110 * Gdx.graphics.getDeltaTime();
         backgroundMove -= 100 * Gdx.graphics.getDeltaTime();
         backgroundMove2 -= 100 * Gdx.graphics.getDeltaTime();
 
