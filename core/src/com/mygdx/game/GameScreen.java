@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.utils.Levels;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+
 
 import java.io.*;
 import java.util.Iterator;
@@ -62,50 +62,25 @@ public class GameScreen implements Screen {
 
 
     //highscore for this playing round
-    static int highScore;
-
-    static int allTimeScore;
+//    static int highScore;
+//
+//    static int allTimeScore;
 
 
     public GameScreen(FlappyBird game, Levels level) {
         this.game = game;
         this.level = level;
 
-        if (level == Levels.EASY){
-            speed = 100L;
-            spawnTime = 4000000000L;
-        }else if (level == Levels.HARD){
-            speed = 350L;
-            spawnTime = 1000000000L;
-        }else {
-            speed = 200L;
-            spawnTime = 1500000000L;
-        }
 
+        setLevel(level);
 
-
-        flapSheet = new Texture(Gdx.files.internal("Jumpy_Birb.png"));
-        TextureRegion[][] tmp = TextureRegion.split(flapSheet,flapSheet.getWidth()/ phoenixCols, flapSheet.getHeight()/phoenixRows);
-        TextureRegion[] flapFrames = new TextureRegion[phoenixCols* phoenixRows];
-        int index = 0;
-        for (int i = 0; i < phoenixRows; i++) {
-            for (int j = 0; j < phoenixCols; j++) {
-                flapFrames[index++] = tmp[i][j];
-            }
-        }
-            flapAnimation = new Animation<TextureRegion>(0.25f, flapFrames);
-
-            stateTime = 0f;
+        createSheet();
+        setTextures();
 
         /**
          * Loading image (64*64) for customer
          */
-        phoenixImage = new Texture(Gdx.files.internal("Phoenix.gif"));
-        blockImage = new Texture(Gdx.files.internal("block.png"));
-        longImage = new Texture(Gdx.files.internal("Building.png"));
-        imageShort = new Texture(Gdx.files.internal("block88.png"));
-        background = new Texture(Gdx.files.internal("bgtest.png"));
-        background2 = new Texture(Gdx.files.internal("bgtest.png"));
+
         backgroundMove = 0;
         backgroundMove2 = 1080;
 
@@ -135,6 +110,41 @@ public class GameScreen implements Screen {
 
     }
 
+    private void setTextures(){
+        phoenixImage = new Texture(Gdx.files.internal("Phoenix.gif"));
+        longImage = new Texture(Gdx.files.internal("rectangleorange.png"));
+        background2 = new Texture(Gdx.files.internal("bgtest.png"));
+        background = new Texture(Gdx.files.internal("bgreverse.png"));
+
+    }
+    private void setLevel(Levels level){
+        if (level == Levels.EASY){
+            speed = 100L;
+            spawnTime = 4000000000L;
+        }else if (level == Levels.HARD){
+            speed = 350L;
+            spawnTime = 1000000000L;
+        }else {
+            speed = 200L;
+            spawnTime = 1500000000L;
+        }
+    }
+
+    private void createSheet(){
+        flapSheet = new Texture(Gdx.files.internal("Jumpy_Birb.png"));
+        TextureRegion[][] tmp = TextureRegion.split(flapSheet,flapSheet.getWidth()/ phoenixCols, flapSheet.getHeight()/phoenixRows);
+        TextureRegion[] flapFrames = new TextureRegion[phoenixCols* phoenixRows];
+        int index = 0;
+        for (int i = 0; i < phoenixRows; i++) {
+            for (int j = 0; j < phoenixCols; j++) {
+                flapFrames[index++] = tmp[i][j];
+            }
+        }
+        flapAnimation = new Animation<TextureRegion>(0.25f, flapFrames);
+
+        stateTime = 0f;
+
+    }
 
     private void spawnBlocks() {
         block = new Rectangle();
@@ -180,9 +190,9 @@ public class GameScreen implements Screen {
 
     }
 
-    public int getHighScoreAllTime() {
-        return allTimeScore;
-    }
+//    public int getHighScoreAllTime() {
+//        return allTimeScore;
+//    }
 
     @Override
     public void render(float delta) {
@@ -203,11 +213,10 @@ public class GameScreen implements Screen {
         TextureRegion currentFrame = flapAnimation.getKeyFrame(stateTime,true);
         game.batch.begin();
         game.batch.draw(background,backgroundMove,0);
-        game.batch.draw(background,backgroundMove2,0);
+        game.batch.draw(background2,backgroundMove2,0);
         if (backgroundMove < -1080){
             backgroundMove = 0;
             backgroundMove2 = 1080;
-
         }
 
 
@@ -267,34 +276,7 @@ public class GameScreen implements Screen {
             }
         }
 
-        //saving high score if it's bigger than score
-        if (score > highScore) {
-            highScore = score;
-        }
-        //writing and reading all-time high score to/from a file
-        try {
-            Scanner scanner = new Scanner(new File("highscore.txt"));
-            while (scanner.hasNextLine()) {
-                allTimeScore = Integer.parseInt(scanner.nextLine());
-            }
-        }
-        catch (IOException ex) {
-            System.out.println("Something went wrong: " + ex.getMessage());
-        }
 
-        //writing all-time high score to a file
-        if(highScore > allTimeScore) {
-            allTimeScore = highScore;
-
-            try {
-                FileWriter writer = new FileWriter("highscore.txt");
-                writer.write(Integer.toString(allTimeScore));
-                writer.close();
-            }
-            catch (IOException ex) {
-                System.out.println("Something went wrong: " + ex.getMessage());
-            }
-        }
 
     }
 
@@ -328,8 +310,6 @@ public class GameScreen implements Screen {
         background.dispose();
     }
 
-    public static int getHighScore() {
-        return highScore;
-    }
+
 
 }
