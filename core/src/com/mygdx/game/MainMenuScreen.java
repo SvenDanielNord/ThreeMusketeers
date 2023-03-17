@@ -32,7 +32,7 @@ public class MainMenuScreen implements Screen {
     Rectangle boxEasy;
 
 
-    public MainMenuScreen(FlappyBird Game) {
+    public MainMenuScreen(FlappyBird Game, Levels level) {
         this.game = Game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -46,7 +46,10 @@ public class MainMenuScreen implements Screen {
         boxHard = new Rectangle(250, 240, 100, 40);
         boxMedium = new Rectangle(250, 190, 100, 40);
         boxEasy = new Rectangle(250, 140, 100, 40);
-        level = Levels.MEDIUM;
+        this.level = level;
+        if (level == null) {
+            this.level = Levels.MEDIUM;
+        }
 
 
     }
@@ -101,8 +104,6 @@ public class MainMenuScreen implements Screen {
             if (Gdx.input.isTouched())
             level = Levels.EASY;
         }
-
-
 
 
         game.batch.end();

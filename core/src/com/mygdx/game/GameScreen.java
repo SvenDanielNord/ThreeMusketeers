@@ -28,7 +28,6 @@ public class GameScreen implements Screen {
     Animation<TextureRegion> flapAnimation;
 
 
-
     SpriteBatch batch;
     /**
      * bird image
@@ -58,7 +57,6 @@ public class GameScreen implements Screen {
     int score;
     int flap;
     float stateTime;
-
 
 
     //highscore for this playing round
@@ -101,8 +99,6 @@ public class GameScreen implements Screen {
         phoenix.height = 60;
 
 
-
-
         blockBank = new Array<Rectangle>();
 
         score = 0;
@@ -110,30 +106,31 @@ public class GameScreen implements Screen {
 
     }
 
-    private void setTextures(){
+    private void setTextures() {
         phoenixImage = new Texture(Gdx.files.internal("Phoenix.gif"));
         longImage = new Texture(Gdx.files.internal("rectangleorange.png"));
         background2 = new Texture(Gdx.files.internal("bgtest.png"));
         background = new Texture(Gdx.files.internal("bgreverse.png"));
 
     }
-    private void setLevel(Levels level){
-        if (level == Levels.EASY){
+
+    private void setLevel(Levels level) {
+        if (level == Levels.EASY) {
             speed = 100L;
             spawnTime = 4000000000L;
-        }else if (level == Levels.HARD){
+        } else if (level == Levels.HARD) {
             speed = 350L;
             spawnTime = 1000000000L;
-        }else {
+        } else {
             speed = 200L;
             spawnTime = 1500000000L;
         }
     }
 
-    private void createSheet(){
+    private void createSheet() {
         flapSheet = new Texture(Gdx.files.internal("Jumpy_Birb.png"));
-        TextureRegion[][] tmp = TextureRegion.split(flapSheet,flapSheet.getWidth()/ phoenixCols, flapSheet.getHeight()/phoenixRows);
-        TextureRegion[] flapFrames = new TextureRegion[phoenixCols* phoenixRows];
+        TextureRegion[][] tmp = TextureRegion.split(flapSheet, flapSheet.getWidth() / phoenixCols, flapSheet.getHeight() / phoenixRows);
+        TextureRegion[] flapFrames = new TextureRegion[phoenixCols * phoenixRows];
         int index = 0;
         for (int i = 0; i < phoenixRows; i++) {
             for (int j = 0; j < phoenixCols; j++) {
@@ -173,7 +170,7 @@ public class GameScreen implements Screen {
             block.x = 1000;
             block.y = 480 - 260;
             block2.x = 1000;
-            block2.y = 0 - 251 ;
+            block2.y = 0 - 251;
 
         } else {
             block.x = 1000;
@@ -210,17 +207,17 @@ public class GameScreen implements Screen {
         /**
          * Start new batch with instruction message to customer and star position for box
          */
-        TextureRegion currentFrame = flapAnimation.getKeyFrame(stateTime,true);
+        TextureRegion currentFrame = flapAnimation.getKeyFrame(stateTime, true);
         game.batch.begin();
-        game.batch.draw(background,backgroundMove,0);
-        game.batch.draw(background2,backgroundMove2,0);
-        if (backgroundMove < -1080){
+        game.batch.draw(background, backgroundMove, 0);
+        game.batch.draw(background2, backgroundMove2, 0);
+        if (backgroundMove < -1080) {
             backgroundMove = 0;
             backgroundMove2 = 1080;
         }
 
 
-        game.batch.draw(currentFrame,phoenix.x + 4, phoenix.y + 4,phoenix.getWidth(),phoenix.getHeight());
+        game.batch.draw(currentFrame, phoenix.x + 4, phoenix.y + 4, phoenix.getWidth(), phoenix.getHeight());
         //game.batch.draw(phoenixImage, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
 
         for (Rectangle block : blockBank) {
@@ -235,7 +232,7 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isTouched()) {
             Vector3 startPas = new Vector3();
-            startPas.set(540, 220  , 0);
+            startPas.set(540, 220, 0);
             camera.unproject(startPas);
             phoenix.x = (int) (startPas.x - 64 / 2);
         }
@@ -269,13 +266,12 @@ public class GameScreen implements Screen {
 
             if (block.overlaps(phoenix)) {
 
-                game.setScreen((new DeathScreen(game, score)));
+                game.setScreen((new DeathScreen(game, score, level)));
             }
             if (block.getX() < -150) {
                 iter.remove();
             }
         }
-
 
 
     }
@@ -309,7 +305,6 @@ public class GameScreen implements Screen {
         longImage.dispose();
         background.dispose();
     }
-
 
 
 }

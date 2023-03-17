@@ -19,7 +19,7 @@ public class FlappyBird extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		fireFont = new BitmapFont(Gdx.files.internal("bitfont.fnt"));
-		this.setScreen(new MainMenuScreen(this));
+		this.setScreen(new MainMenuScreen(this, null));
 	}
 
 	@Override
