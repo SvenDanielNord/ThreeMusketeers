@@ -25,7 +25,7 @@ public class DeathScreen implements Screen {
     long screenStart;
     BitmapFont endFont;
     int score;
-    static int highscore = 0;
+
 
     public DeathScreen(FlappyBird game, int score) {
         this.game = game;
@@ -47,9 +47,6 @@ public class DeathScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        if(score > highscore) {
-            highscore = score;
-        }
 
         ScreenUtils.clear(0,0,0,1);
         camera.update();
@@ -61,9 +58,9 @@ public class DeathScreen implements Screen {
         game.fireFont.draw(game.batch, "Your score was: " + score, 500, 380);
 
         //writing high score for this playing round on screen
-        game.fireFont.draw(game.batch, "Your highscore is: " + highscore, 500, 300);
+        game.fireFont.draw(game.batch, "Your highscore is: " + HighScore.setHighScore(score), 500, 300);
         //writing best score ever
-        game.fireFont.draw(game.batch, "Your best score ever is: " + GameScreen.allTimeScore, 500, 220);
+        game.fireFont.draw(game.batch, "Your best score ever is: " + HighScore.allTimeScore, 500, 220);
         game.batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && TimeUtils.nanoTime() - screenStart > 500000000) {
