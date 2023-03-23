@@ -58,6 +58,8 @@ public class GameScreen implements Screen {
     int flap;
     float stateTime;
 
+    int frames = 0;
+
 
     //highscore for this playing round
 //    static int highScore;
@@ -239,18 +241,19 @@ public class GameScreen implements Screen {
         /**
          * Input to jump, press space key
          */
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched(Input.Buttons.LEFT)) {
-            phoenix.y += 800 * Gdx.graphics.getDeltaTime();
-
-            if (phoenix.y < 0)
-                phoenix.y = 0;
-            if (phoenix.y > 480 - 64)
-                phoenix.y = 480 - 64;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            frames = 16;
+        }
+        if (frames > 0) {
+            phoenix.y += 250 * Gdx.graphics.getDeltaTime();
+            frames--;
+        }else{
+            phoenix.y -= 150 * Gdx.graphics.getDeltaTime();
         }
         /**
          * Bird sinking time
          */
-        phoenix.y -= 150 * Gdx.graphics.getDeltaTime();
+
         backgroundMove -= 100 * Gdx.graphics.getDeltaTime();
         backgroundMove2 -= 100 * Gdx.graphics.getDeltaTime();
 
@@ -258,6 +261,10 @@ public class GameScreen implements Screen {
             score = score + 100;
             spawnBlocks();
         }
+        if (phoenix.y < 0)
+            phoenix.y = 0;
+        if (phoenix.y > 480 - 64)
+            phoenix.y = 480 - 64;
 
         Iterator<Rectangle> iter = blockBank.iterator();
         while (iter.hasNext()) {
