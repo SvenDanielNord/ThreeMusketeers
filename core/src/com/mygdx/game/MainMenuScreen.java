@@ -73,36 +73,38 @@ public class MainMenuScreen implements Screen {
         game.batch.begin();
         game.fireFont.draw(game.batch, "Jumpy Birb", 380, 220);
         game.fireFont.draw(game.batch, "Press SPACE to play game", 380, 160);
+        game.fireFont.draw(game.batch, "Press X to exit", 380, 100);
         int x = 800 / 2 - buttonWidth / 2;
 
-        if (level == Levels.MEDIUM){
+        if (level == Levels.MEDIUM) {
             game.batch.draw(activatedMedium, buttonX, 190);
-        }else {
+        } else {
             game.batch.draw(medium, buttonX, 190);
         }
-        if (level == Levels.HARD){
+        if (level == Levels.HARD) {
             game.batch.draw(activatedHard, buttonX, 240);
-        }else {
+        } else {
             game.batch.draw(hard, buttonX, 240);
-        }if (level == Levels.EASY){
+        }
+        if (level == Levels.EASY) {
             game.batch.draw(activatedEasy, buttonX, 140);
-        }else {
+        } else {
             game.batch.draw(easy, buttonX, 140);
         }
 
-        if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 220 - buttonHeight && 480 - Gdx.input.getY() > 120 ) {
+        if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 220 - buttonHeight && 480 - Gdx.input.getY() > 120) {
             if (Gdx.input.isTouched())
-            level = Levels.HARD;
+                level = Levels.HARD;
         }
 
         if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 150 - buttonHeight && 480 - Gdx.input.getY() > 50) {
             if (Gdx.input.isTouched())
-            level = Levels.MEDIUM;
+                level = Levels.MEDIUM;
         }
 
         if (Gdx.input.getX() < x + buttonWidth && Gdx.input.getX() > x && 480 - Gdx.input.getY() < 70 - buttonHeight && 480 - Gdx.input.getY() > -30) {
             if (Gdx.input.isTouched())
-            level = Levels.EASY;
+                level = Levels.EASY;
         }
 
 
@@ -114,9 +116,16 @@ public class MainMenuScreen implements Screen {
          */
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             if (TimeUtils.nanoTime() - delay > 500000000) {
-                game.setScreen((new GameScreen(game ,level)));
+                game.setScreen((new GameScreen(game, level)));
                 dispose();
             }
+        }
+
+        /**
+         * Press x to exit
+         */
+        if (Gdx.input.isKeyPressed(Input.Keys.X)) {
+            Gdx.app.exit();
         }
 
     }

@@ -114,13 +114,23 @@ public class GameScreen implements Screen {
 
     }
 
+    /**
+     * easy level - bird speed is slower
+     * @param level
+     */
     private void setLevel(Levels level) {
         if (level == Levels.EASY) {
             speed = 100L;
             spawnTime = 4000000000L;
+            /**
+             * medium level - bird speed is fastest
+             */
         } else if (level == Levels.HARD) {
             speed = 350L;
             spawnTime = 1000000000L;
+            /**
+             * hard level - bird speed is faster
+             */
         } else {
             speed = 200L;
             spawnTime = 1500000000L;
