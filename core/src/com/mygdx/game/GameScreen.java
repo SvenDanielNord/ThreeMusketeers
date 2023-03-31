@@ -123,13 +123,13 @@ public class GameScreen implements Screen {
             speed = 100L;
             spawnTime = 4000000000L;
             /**
-             * medium level - bird speed is faster
+             * medium level - bird speed is fastest
              */
         } else if (level == Levels.HARD) {
             speed = 350L;
             spawnTime = 1000000000L;
             /**
-             * hard level - bird speed is fastest
+             * hard level - bird speed is faster
              */
         } else {
             speed = 200L;
