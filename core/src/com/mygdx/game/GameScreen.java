@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
     final int phoenixRows = 1;
     float backgroundMove;
     float backgroundMove2;
-
+    int gravityDownX = 110;
     int score;
     int frames = 0;
     float stateTime;
@@ -239,14 +239,14 @@ public class GameScreen implements Screen {
         /**
          * Input to jump, press space key
          */
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && frames < 1) {
             frames = 16;
         }
         if (frames > 0) {
             phoenix.y += 210 * Gdx.graphics.getDeltaTime();
             frames--;
         }else{
-            phoenix.y -= 110 * Gdx.graphics.getDeltaTime();
+            phoenix.y -= gravityDownX * Gdx.graphics.getDeltaTime();
         }
         /**
          * Bird sinking time
