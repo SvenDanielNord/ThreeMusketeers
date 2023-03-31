@@ -73,6 +73,7 @@ public class MainMenuScreen implements Screen {
         game.batch.begin();
         game.fireFont.draw(game.batch, "Jumpy Birb", 380, 220);
         game.fireFont.draw(game.batch, "Press SPACE to play game", 380, 160);
+        game.fireFont.draw(game.batch, "Press X to exit", 380, 120);
         int x = 800 / 2 - buttonWidth / 2;
 
         if (level == Levels.MEDIUM) {
