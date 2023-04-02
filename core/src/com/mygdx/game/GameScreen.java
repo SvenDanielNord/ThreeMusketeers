@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -57,6 +58,7 @@ public class GameScreen implements Screen {
     int score;
     int frames = 0;
     float stateTime;
+    private Sound jumpSound;
 
 
     //highscore for this playing round
@@ -103,6 +105,11 @@ public class GameScreen implements Screen {
 
         score = 0;
 
+        /**
+         * Creating jumping sound
+         */
+        jumpSound = Gdx.audio.newSound(Gdx.files.internal("jump-15984.wav"));
+
 
     }
 
@@ -116,6 +123,7 @@ public class GameScreen implements Screen {
 
     /**
      * easy level - bird speed is slower
+     *
      * @param level
      */
     private void setLevel(Levels level) {
@@ -247,24 +255,27 @@ public class GameScreen implements Screen {
             phoenix.x = (int) (startPas.x - 64 / 2);
         }
         /**
-         * Input to jump, press space key
+         * Input to jump, press space key. Playing jump sound also
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && frames < 1) {
+
+            jumpSound.play();
             frames = 16;
+
         }
         if (frames > 0) {
             phoenix.y += 210 * Gdx.graphics.getDeltaTime();
             frames--;
-        }else{
+        } else {
             phoenix.y -= gravityDownX * Gdx.graphics.getDeltaTime();
         }
         /**
          * Bird sinking time
          */
-            if (phoenix.y < 0)
-                phoenix.y = 0;
-            if (phoenix.y > 480 - 64)
-                phoenix.y = 480 - 64;
+        if (phoenix.y < 0)
+            phoenix.y = 0;
+        if (phoenix.y > 480 - 64)
+            phoenix.y = 480 - 64;
 
         backgroundMove -= 100 * Gdx.graphics.getDeltaTime();
         backgroundMove2 -= 100 * Gdx.graphics.getDeltaTime();
