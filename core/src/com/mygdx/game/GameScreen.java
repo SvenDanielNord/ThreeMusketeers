@@ -34,6 +34,8 @@ public class GameScreen implements Screen {
      * bird image
      */
     Texture flapSheet;
+    Texture flap;
+    Texture glide;
     Texture background;
     Texture background2;
     Texture phoenixImage;
@@ -58,6 +60,8 @@ public class GameScreen implements Screen {
     int score;
     int frames = 0;
     float stateTime;
+
+    boolean shouldFlap = false;
     private Sound jumpSound;
 
 
@@ -117,6 +121,8 @@ public class GameScreen implements Screen {
         longImage = new Texture(Gdx.files.internal("rectangleorange.png"));
         background2 = new Texture(Gdx.files.internal("bgtest.png"));
         background = new Texture(Gdx.files.internal("bgreverse.png"));
+        flap = new Texture(Gdx.files.internal("up.png"));
+        glide = new Texture(Gdx.files.internal("down.png"));
 
     }
 
@@ -231,10 +237,15 @@ public class GameScreen implements Screen {
             backgroundMove = 0;
             backgroundMove2 = 1080;
         }
+       if (shouldFlap){
+            game.batch.draw(flap, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
+       }else{
+            game.batch.draw(glide, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
+        }
 
 
-        game.batch.draw(currentFrame, phoenix.x + 4, phoenix.y + 4, phoenix.getWidth(), phoenix.getHeight());
-        //game.batch.draw(phoenixImage, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
+        //game.batch.draw(currentFrame, phoenix.x + 4, phoenix.y + 4, phoenix.getWidth(), phoenix.getHeight());
+
 
         for (Rectangle block : blockBank) {
             game.batch.draw(longImage, block.x, block.y);
@@ -261,8 +272,10 @@ public class GameScreen implements Screen {
         }
         if (frames > 0) {
             phoenix.y += 210 * Gdx.graphics.getDeltaTime();
+            shouldFlap = true;
             frames--;
         }else{
+            shouldFlap = false;
             phoenix.y -= gravityDownX * Gdx.graphics.getDeltaTime();
         }
         /**
