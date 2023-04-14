@@ -34,6 +34,8 @@ public class GameScreen implements Screen {
      * bird image
      */
     Texture flapSheet;
+    Texture flap;
+    Texture glide;
     Texture background;
     Texture background2;
     Texture phoenixImage;
@@ -58,6 +60,8 @@ public class GameScreen implements Screen {
     int score;
     int frames = 0;
     float stateTime;
+
+    boolean shouldFlap = false;
     private Sound jumpSound;
 
 
@@ -110,7 +114,6 @@ public class GameScreen implements Screen {
          */
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("jump-15984.wav"));
 
-
     }
 
     private void setTextures() {
@@ -118,12 +121,13 @@ public class GameScreen implements Screen {
         longImage = new Texture(Gdx.files.internal("rectangleorange.png"));
         background2 = new Texture(Gdx.files.internal("bgtest.png"));
         background = new Texture(Gdx.files.internal("bgreverse.png"));
+        flap = new Texture(Gdx.files.internal("up.png"));
+        glide = new Texture(Gdx.files.internal("down.png"));
 
     }
 
     /**
      * easy level - bird speed is slower
-     *
      * @param level
      */
     private void setLevel(Levels level) {
@@ -233,10 +237,15 @@ public class GameScreen implements Screen {
             backgroundMove = 0;
             backgroundMove2 = 1080;
         }
+       if (shouldFlap){
+            game.batch.draw(flap, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
+       }else{
+            game.batch.draw(glide, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
+        }
 
 
-        game.batch.draw(currentFrame, phoenix.x + 4, phoenix.y + 4, phoenix.getWidth(), phoenix.getHeight());
-        //game.batch.draw(phoenixImage, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
+        //game.batch.draw(currentFrame, phoenix.x + 4, phoenix.y + 4, phoenix.getWidth(), phoenix.getHeight());
+
 
         for (Rectangle block : blockBank) {
             game.batch.draw(longImage, block.x, block.y);
@@ -255,27 +264,27 @@ public class GameScreen implements Screen {
             phoenix.x = (int) (startPas.x - 64 / 2);
         }
         /**
-         * Input to jump, press space key. Playing jump sound also
+         * Input to jump, press space key, Playing jump sound also
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && frames < 1) {
-
-            jumpSound.play();
             frames = 16;
-
+            jumpSound.play();
         }
         if (frames > 0) {
             phoenix.y += 210 * Gdx.graphics.getDeltaTime();
+            shouldFlap = true;
             frames--;
-        } else {
+        }else{
+            shouldFlap = false;
             phoenix.y -= gravityDownX * Gdx.graphics.getDeltaTime();
         }
         /**
          * Bird sinking time
          */
-        if (phoenix.y < 0)
-            phoenix.y = 0;
-        if (phoenix.y > 480 - 64)
-            phoenix.y = 480 - 64;
+            if (phoenix.y < 0)
+                phoenix.y = 0;
+            if (phoenix.y > 480 - 64)
+                phoenix.y = 480 - 64;
 
         backgroundMove -= 100 * Gdx.graphics.getDeltaTime();
         backgroundMove2 -= 100 * Gdx.graphics.getDeltaTime();
