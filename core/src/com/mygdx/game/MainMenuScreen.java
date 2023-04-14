@@ -21,6 +21,19 @@ public class MainMenuScreen implements Screen {
     Levels level;
     OrthographicCamera camera;
     long delay;
+    /**
+     * welcome screen
+     */
+    Texture welcome;
+    Texture welcomeBird;
+    Texture spaceToPlay;
+    Texture xToExit;
+
+    /**
+     * background pic
+     */
+    Texture backgroundWelcome;
+    Texture chooseLevel;
     Texture medium;
     Texture easy;
     Texture hard;
@@ -37,6 +50,16 @@ public class MainMenuScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         delay = TimeUtils.nanoTime();
+        /**
+         * welcome screen
+         */
+        backgroundWelcome = new Texture(Gdx.files.internal("bgtest.png"));
+        welcome = new Texture(Gdx.files.internal("welcome.png"));
+        welcomeBird = new Texture(Gdx.files.internal("jumpybird.png"));
+        chooseLevel = new Texture(Gdx.files.internal("chooselevel.png"));
+        spaceToPlay = new Texture(Gdx.files.internal("pressspace.png"));
+        xToExit = new Texture(Gdx.files.internal("pressx.png"));
+
         medium = new Texture(Gdx.files.internal("medium.png"));
         easy = new Texture(Gdx.files.internal("easy.png"));
         hard = new Texture(Gdx.files.internal("hard.png"));
@@ -71,9 +94,19 @@ public class MainMenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.fireFont.draw(game.batch, "Jumpy Birb", 380, 220);
-        game.fireFont.draw(game.batch, "Press SPACE to play game", 380, 160);
-        game.fireFont.draw(game.batch, "Press X to exit", 380, 100);
+        //game.fireFont.draw(game.batch, "Press SPACE to play game", 380, 160);
+        //game.fireFont.draw(game.batch, "Press X to exit", 380, 100);
+
+        /**
+         * Draw welcome text
+         */
+        game.batch.draw(backgroundWelcome, (buttonX-300), 0);
+        game.batch.draw(welcome, (buttonX - 50), 410);
+        game.batch.draw(welcomeBird, (buttonX - 110), 350);
+        game.batch.draw(chooseLevel, (buttonX - 110), 285);
+        game.batch.draw(spaceToPlay, (buttonX - 110), 80);
+        game.batch.draw(xToExit, (buttonX - 120), 30);
+
         int x = 800 / 2 - buttonWidth / 2;
 
         if (level == Levels.MEDIUM) {
