@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
     final int phoenixRows = 1;
     float backgroundMove;
     float backgroundMove2;
-    int gravityDownX = 110;
+    int gravityDownY = 110;
     int score;
     int frames = 0;
     float stateTime;
@@ -128,6 +128,7 @@ public class GameScreen implements Screen {
         } else if (level == Levels.HARD) {
             speed = 350L;
             spawnTime = 1000000000L;
+            gravityDownY = 150;
             /**
              * hard level - bird speed is faster
              */
@@ -256,7 +257,7 @@ public class GameScreen implements Screen {
             phoenix.y += 210 * Gdx.graphics.getDeltaTime();
             frames--;
         }else{
-            phoenix.y -= gravityDownX * Gdx.graphics.getDeltaTime();
+            phoenix.y -= gravityDownY * Gdx.graphics.getDeltaTime();
         }
         /**
          * Bird sinking time
