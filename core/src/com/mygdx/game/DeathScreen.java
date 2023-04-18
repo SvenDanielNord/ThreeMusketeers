@@ -61,7 +61,7 @@ public class DeathScreen implements Screen {
         game.fireFont.draw(game.batch, "Your score was: " + score, 500, 380);
 
         //writing high score for this playing round on screen
-        game.fireFont.draw(game.batch, "Your highscore is: " + HighScore.setHighScore(score), 500, 300);
+        game.fireFont.draw(game.batch, "Your highscore is: " + HighScore.setHighScore(score, level), 500, 300);
         //writing best score ever
         game.fireFont.draw(game.batch, "Your best score ever is: " + HighScore.allTimeScore, 500, 220);
         game.batch.end();

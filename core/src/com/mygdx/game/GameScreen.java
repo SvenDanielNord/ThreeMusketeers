@@ -202,6 +202,21 @@ public class GameScreen implements Screen {
 
         }
     }
+    private void rectangleIterator() {
+        Iterator<Rectangle> iter = blockBank.iterator();
+        while (iter.hasNext()) {
+            Rectangle block = iter.next();
+            block.x -= (speed * Gdx.graphics.getDeltaTime());
+
+            if (block.overlaps(phoenix)) {
+                HighScore.separateHighscores(level);
+                game.setScreen((new DeathScreen(game, score, level)));
+            }
+            if (block.getX() < -150) {
+                iter.remove();
+            }
+        }
+    }
 
 
     @Override
@@ -294,22 +309,12 @@ public class GameScreen implements Screen {
             spawnBlocks();
         }
 
-        Iterator<Rectangle> iter = blockBank.iterator();
-        while (iter.hasNext()) {
-            Rectangle block = iter.next();
-            block.x -= (speed * Gdx.graphics.getDeltaTime());
-
-            if (block.overlaps(phoenix)) {
-
-                game.setScreen((new DeathScreen(game, score, level)));
-            }
-            if (block.getX() < -150) {
-                iter.remove();
-            }
-        }
+        rectangleIterator();
 
 
     }
+
+
 
     @Override
     public void resize(int width, int height) {
