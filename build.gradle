@@ -9,10 +9,15 @@ buildscript {
         google()
     }
     dependencies {
-        
+
 
     }
 }
+
+    plugins {
+        id "org.sonarqube" version "4.0.0.2929"
+    }
+
 
 allprojects {
     apply plugin: "eclipse"
