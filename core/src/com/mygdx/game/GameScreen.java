@@ -42,13 +42,13 @@ public class GameScreen implements Screen {
     Texture blockImage;
     Texture longImage;
     Texture imageShort;
+    Texture cloud;
     OrthographicCamera camera;
     Rectangle phoenix;
     Rectangle block;
     Rectangle block2;
     Levels level;
     Array<Rectangle> blockBank;
-    Array<Texture> textureBank;
     long lastBlock;
     long speed;
     long spawnTime;
@@ -85,7 +85,7 @@ public class GameScreen implements Screen {
          * Loading image (64*64) for customer
          */
 
-        backgroundMove = 0;
+        backgroundMove = 700;
         backgroundMove2 = 1080;
 
 
@@ -99,7 +99,7 @@ public class GameScreen implements Screen {
          * Creating player box and setting coordinates for it
          */
         phoenix = new Rectangle();
-        phoenix.x = 800 / 2 - 64 / 2;
+        phoenix.x = (float) 800 / 2 - (float) 64 / 2;
         phoenix.y = 220L;
         phoenix.width = 60;
         phoenix.height = 60;
@@ -112,7 +112,7 @@ public class GameScreen implements Screen {
         /**
          * Creating jumping sound
          */
-        jumpSound = Gdx.audio.newSound(Gdx.files.internal("jump-15984.wav"));
+        jumpSound = Gdx.audio.newSound(Gdx.files.internal("wingFlap.ogg"));
 
     }
 
@@ -123,6 +123,7 @@ public class GameScreen implements Screen {
         background = new Texture(Gdx.files.internal("bgreverse.png"));
         flap = new Texture(Gdx.files.internal("up.png"));
         glide = new Texture(Gdx.files.internal("down.png"));
+        cloud = new Texture(Gdx.files.internal("cloud.png"));
 
     }
 
@@ -185,20 +186,20 @@ public class GameScreen implements Screen {
 
         if (random == 1) {
             block.x = 1000;
-            block.y = 0 - 155;
+            block.y = (float)0 - 155;
             block2.x = 1000;
-            block2.y = 480 - 155;
+            block2.y = (float)480 - 155;
         } else if (random == 2) {
             block.x = 1000;
-            block.y = 480 - 260;
+            block.y = (float)480 - 260;
             block2.x = 1000;
-            block2.y = 0 - 251;
+            block2.y = (float)0 - 251;
 
         } else {
             block.x = 1000;
-            block.y = 0 - 91;
+            block.y = (float)0 - 91;
             block2.x = 1000;
-            block2.y = 480 - 91;
+            block2.y = (float)480 - 91;
 
         }
     }
@@ -246,12 +247,13 @@ public class GameScreen implements Screen {
          */
         TextureRegion currentFrame = flapAnimation.getKeyFrame(stateTime, true);
         game.batch.begin();
-        game.batch.draw(background, backgroundMove, 0);
-        game.batch.draw(background2, backgroundMove2, 0);
-        if (backgroundMove < -1080) {
-            backgroundMove = 0;
-            backgroundMove2 = 1080;
-        }
+        game.batch.draw(background, 0, 0);
+        game.batch.draw(cloud ,backgroundMove ,200);
+
+//        if (backgroundMove < -1080) {
+//            backgroundMove = 0;
+//            backgroundMove2 = 1080;
+//        }
        if (shouldFlap){
             game.batch.draw(flap, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
        }else{
@@ -276,7 +278,7 @@ public class GameScreen implements Screen {
             Vector3 startPas = new Vector3();
             startPas.set(540, 220, 0);
             camera.unproject(startPas);
-            phoenix.x = (int) (startPas.x - 64 / 2);
+            phoenix.x = (float) (startPas.x - (double)64 / 2);
         }
         /**
          * Input to jump, press space key, Playing jump sound also
@@ -299,7 +301,7 @@ public class GameScreen implements Screen {
             if (phoenix.y < 0)
                 phoenix.y = 0;
             if (phoenix.y > 480 - 64)
-                phoenix.y = 480 - 64;
+                phoenix.y = (float)480 - 64;
 
         backgroundMove -= 100 * Gdx.graphics.getDeltaTime();
         backgroundMove2 -= 100 * Gdx.graphics.getDeltaTime();

@@ -22,25 +22,23 @@ public class HighScore {
         if (level == Levels.EASY){
             if (score > highScoreEasy) {
                 highScoreEasy = score;
-                highScore = highScoreEasy;
-                readAllTimeScore(highScoreEasy);
+
             }
             highScore = highScoreEasy;
         }else if (level == Levels.HARD){
             if (score > highScoreHard) {
                 highScoreHard = score;
-                highScore = highScoreHard;
-                readAllTimeScore(highScoreHard);
+
+
             }
             highScore = highScoreHard;
         }else {
             if (score > highScoreMedium) {
                 highScoreMedium = score;
-                highScore = highScoreMedium;
-                readAllTimeScore(highScoreMedium);
             }
             highScore = highScoreMedium;
         }
+        readAllTimeScore(highScore);
         //saving high score if it's bigger than score
 
 
@@ -70,9 +68,9 @@ public class HighScore {
 
 
         //writing and reading all-time high score to/from a file
-        try {
+        try (Scanner scanner = new Scanner(new File(highScorePath))){
 
-            Scanner scanner = new Scanner(new File(highScorePath));
+
             while (scanner.hasNextLine()) {
                 allTimeScore = Integer.parseInt(scanner.nextLine());
 
@@ -88,8 +86,8 @@ public class HighScore {
 
     }
     private static void writeAlltimeHighScore() {
-        try {
-            FileWriter writer = new FileWriter(highScorePath);
+        try (FileWriter writer = new FileWriter(highScorePath)){
+
             writer.write(Integer.toString(allTimeScore));
             writer.close();
         } catch (IOException ex) {
