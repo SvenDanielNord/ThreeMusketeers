@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.utils.Levels;
 
+@SuppressWarnings("java:S1186")
 public class MainMenuScreen implements Screen {
     final int buttonWidth = 100;
     final int buttonHeight = 40;

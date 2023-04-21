@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
+@SuppressWarnings("java:S1186")
 public class GameScreen implements Screen {
 
     final FlappyBird game;
