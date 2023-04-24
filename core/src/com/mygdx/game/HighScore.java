@@ -22,14 +22,11 @@ public class HighScore {
         if (level == Levels.EASY){
             if (score > highScoreEasy) {
                 highScoreEasy = score;
-
             }
             highScore = highScoreEasy;
         }else if (level == Levels.HARD){
             if (score > highScoreHard) {
                 highScoreHard = score;
-
-
             }
             highScore = highScoreHard;
         }else {
