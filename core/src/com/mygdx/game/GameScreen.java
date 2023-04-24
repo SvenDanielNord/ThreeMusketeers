@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -18,9 +17,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.utils.Levels;
 
 
-import java.io.*;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("java:S1186")
@@ -44,6 +41,7 @@ public class GameScreen implements Screen {
     Texture longImage;
     Texture imageShort;
     Texture cloud;
+    Texture box;
     OrthographicCamera camera;
     Rectangle phoenix;
     Rectangle block;
@@ -57,9 +55,10 @@ public class GameScreen implements Screen {
     final int phoenixRows = 1;
     float backgroundMove;
     float backgroundMove2;
-    int gravityDownX = 110;
+    int gravityDownY = 200;
     int score;
     int frames = 0;
+    long pause;
     float stateTime;
 
     boolean shouldFlap = false;
@@ -101,9 +100,9 @@ public class GameScreen implements Screen {
          */
         phoenix = new Rectangle();
         phoenix.x = (float) 800 / 2 - (float) 64 / 2;
-        phoenix.y = 220L;
-        phoenix.width = 60;
-        phoenix.height = 60;
+        phoenix.y = 220;
+        phoenix.width = 50;
+        phoenix.height = 40;
 
 
         blockBank = new Array<Rectangle>();
@@ -119,13 +118,13 @@ public class GameScreen implements Screen {
 
     private void setTextures() {
         phoenixImage = new Texture(Gdx.files.internal("Phoenix.gif"));
-        longImage = new Texture(Gdx.files.internal("rectangleorange.png"));
+        longImage = new Texture(Gdx.files.internal("rectanglepink.png"));
         background2 = new Texture(Gdx.files.internal("bgtest.png"));
         background = new Texture(Gdx.files.internal("bgreverse.png"));
         flap = new Texture(Gdx.files.internal("up.png"));
         glide = new Texture(Gdx.files.internal("down.png"));
         cloud = new Texture(Gdx.files.internal("cloud.png"));
-
+//        box = new Texture(Gdx.files.internal("hitbox.png"));
     }
 
     /**
@@ -169,12 +168,12 @@ public class GameScreen implements Screen {
 
     private void spawnBlocks() {
         block = new Rectangle();
-        block.width = 104;
-        block.height = 311;
+        block.width = 90;
+        block.height = 290;
 
         block2 = new Rectangle();
-        block2.width = 104;
-        block2.height = 311;
+        block2.width = 90;
+        block2.height = 280;
 
         setBlockPosition();
         blockBank.add(block);
@@ -212,6 +211,7 @@ public class GameScreen implements Screen {
 
             if (block.overlaps(phoenix)) {
                 HighScore.separateHighscores(level);
+                pause();
                 game.setScreen((new DeathScreen(game, score, level)));
             }
             if (block.getX() < -150) {
@@ -256,17 +256,18 @@ public class GameScreen implements Screen {
 //            backgroundMove2 = 1080;
 //        }
        if (shouldFlap){
-            game.batch.draw(flap, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
+            game.batch.draw(flap, phoenix.x - 7, phoenix.y - 12, phoenix.width + 14, phoenix.height + 24);
        }else{
-            game.batch.draw(glide, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
+            game.batch.draw(glide, phoenix.x - 7, phoenix.y - 12, phoenix.width + 14, phoenix.height + 24);
         }
+//        game.batch.draw(box, phoenix.x, phoenix.y, phoenix.width, phoenix.height);
 
 
         //game.batch.draw(currentFrame, phoenix.x + 4, phoenix.y + 4, phoenix.getWidth(), phoenix.getHeight());
 
 
         for (Rectangle block : blockBank) {
-            game.batch.draw(longImage, block.x, block.y);
+            game.batch.draw(longImage, block.x - 10, block.y);
         }
 
         game.fireFont.draw(game.batch, "Score: " + score, 380, 480);
@@ -285,16 +286,21 @@ public class GameScreen implements Screen {
          * Input to jump, press space key, Playing jump sound also
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && frames < 1) {
-            frames = 16;
+            frames = 23;
             jumpSound.play();
         }
-        if (frames > 0) {
-            phoenix.y += 210 * Gdx.graphics.getDeltaTime();
+        if (frames > 0 && frames < 7){
+            phoenix.y += 110 * Gdx.graphics.getDeltaTime();
+            shouldFlap = true;
+            frames--;
+        }
+        else if (frames > 7) {
+            phoenix.y += 300 * Gdx.graphics.getDeltaTime();
             shouldFlap = true;
             frames--;
         }else{
             shouldFlap = false;
-            phoenix.y -= gravityDownX * Gdx.graphics.getDeltaTime();
+            phoenix.y -= gravityDownY * Gdx.graphics.getDeltaTime();
         }
         /**
          * Bird sinking time
@@ -326,6 +332,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        pause = TimeUtils.nanoTime();
+        while(TimeUtils.nanoTime() - pause < 500000000);
 
     }
 
