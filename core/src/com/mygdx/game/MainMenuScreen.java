@@ -25,7 +25,7 @@ public class MainMenuScreen implements Screen {
     /**
      * welcome screen
      */
-    Texture welcome;
+    //Texture welcome;
     Texture welcomeBird;
     Texture spaceToPlay;
     Texture xToExit;
@@ -55,7 +55,7 @@ public class MainMenuScreen implements Screen {
          * welcome screen
          */
         backgroundWelcome = new Texture(Gdx.files.internal("bgtest.png"));
-        welcome = new Texture(Gdx.files.internal("welcome.png"));
+       // welcome = new Texture(Gdx.files.internal("welcome.png"));
         welcomeBird = new Texture(Gdx.files.internal("jumpybird.png"));
         chooseLevel = new Texture(Gdx.files.internal("chooselevel.png"));
         spaceToPlay = new Texture(Gdx.files.internal("pressspace.png"));
@@ -102,11 +102,11 @@ public class MainMenuScreen implements Screen {
          * Draw welcome text
          */
         game.batch.draw(backgroundWelcome, (buttonX-300), 0);
-        game.batch.draw(welcome, (buttonX - 50), 410);
+        //game.batch.draw(welcome, (buttonX - 50), 410);
         game.batch.draw(welcomeBird, (buttonX - 110), 350);
         game.batch.draw(chooseLevel, (buttonX - 110), 285);
-        game.batch.draw(spaceToPlay, (buttonX - 110), 80);
-        game.batch.draw(xToExit, (buttonX - 120), 30);
+        game.batch.draw(spaceToPlay, (buttonX - 110), 35);
+        game.batch.draw(xToExit, (buttonX - 110), -10);
 
         int x = 800 / 2 - buttonWidth / 2;
 
