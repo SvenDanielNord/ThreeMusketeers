@@ -41,7 +41,8 @@ public class GameScreen implements Screen {
     Texture longImage;
     Texture imageShort;
     Texture cloud;
-    Texture box;
+    Texture cars;
+    Texture cars2;
     OrthographicCamera camera;
     Rectangle phoenix;
     Rectangle block;
@@ -85,8 +86,8 @@ public class GameScreen implements Screen {
          * Loading image (64*64) for customer
          */
 
-        backgroundMove = 700;
-        backgroundMove2 = 1080;
+        backgroundMove = 800;
+        backgroundMove2 = 1400;
 
 
         /**
@@ -118,12 +119,13 @@ public class GameScreen implements Screen {
 
     private void setTextures() {
         phoenixImage = new Texture(Gdx.files.internal("Phoenix.gif"));
-        longImage = new Texture(Gdx.files.internal("rectanglepink.png"));
+        longImage = new Texture(Gdx.files.internal("rectangleblue.png"));
         background2 = new Texture(Gdx.files.internal("bgtest.png"));
         background = new Texture(Gdx.files.internal("bgreverse.png"));
         flap = new Texture(Gdx.files.internal("up.png"));
         glide = new Texture(Gdx.files.internal("down.png"));
-        cloud = new Texture(Gdx.files.internal("cloud.png"));
+        cars = new Texture(Gdx.files.internal("cars.png"));
+        cars2 = new Texture(Gdx.files.internal("cars2.png"));
 //        box = new Texture(Gdx.files.internal("hitbox.png"));
     }
 
@@ -249,12 +251,17 @@ public class GameScreen implements Screen {
         TextureRegion currentFrame = flapAnimation.getKeyFrame(stateTime, true);
         game.batch.begin();
         game.batch.draw(background, 0, 0);
-        game.batch.draw(cloud ,backgroundMove ,200);
+        game.batch.draw(cars ,backgroundMove ,0);
+        game.batch.draw(cars2 ,backgroundMove2 ,0);
 
-//        if (backgroundMove < -1080) {
-//            backgroundMove = 0;
-//            backgroundMove2 = 1080;
-//        }
+
+        if (backgroundMove < -460) {
+            backgroundMove = 800;
+
+        }
+        if (backgroundMove2 < -480){
+            backgroundMove2 = 800;
+        }
        if (shouldFlap){
             game.batch.draw(flap, phoenix.x - 7, phoenix.y - 12, phoenix.width + 14, phoenix.height + 24);
        }else{
