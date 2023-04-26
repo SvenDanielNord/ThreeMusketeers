@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -44,6 +45,8 @@ public class MainMenuScreen implements Screen {
     Rectangle boxHard;
     Rectangle boxMedium;
     Rectangle boxEasy;
+    private long id;
+    private Sound music;
 
 
     public MainMenuScreen(FlappyBird Game, Levels level) {
@@ -73,9 +76,11 @@ public class MainMenuScreen implements Screen {
         this.level = level;
         if (level == null) {
             this.level = Levels.MEDIUM;
+
         }
-
-
+        music = Gdx.audio.newSound(Gdx.files.internal("start_music.mp3"));
+        id = music.play(0.1f);
+        music.setLooping(id, true);
     }
 
     @Override
@@ -150,6 +155,7 @@ public class MainMenuScreen implements Screen {
          */
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             if (TimeUtils.nanoTime() - delay > 500000000) {
+                music.stop(id);
                 game.setScreen((new GameScreen(game, level)));
                 dispose();
             }
@@ -186,6 +192,17 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        music.dispose();
+        backgroundWelcome.dispose();
+        welcomeBird.dispose();
+        activatedEasy.dispose();
+        activatedMedium.dispose();
+        activatedHard.dispose();
+        hard.dispose();
+        medium.dispose();
+        easy.dispose();
+        chooseLevel.dispose();
+        xToExit.dispose();
+        spaceToPlay.dispose();
     }
 }
