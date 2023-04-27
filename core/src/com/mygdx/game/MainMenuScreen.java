@@ -111,7 +111,7 @@ public class MainMenuScreen implements Screen {
         game.batch.draw(welcomeBird, (buttonX - 110), 350);
         game.batch.draw(chooseLevel, (buttonX - 110), 285);
         game.batch.draw(spaceToPlay, (buttonX - 110), 35);
-        game.batch.draw(xToExit, (buttonX - 110), -10);
+        game.batch.draw(xToExit, (buttonX - 110), 0);
 
         int x = 800 / 2 - buttonWidth / 2;
 
