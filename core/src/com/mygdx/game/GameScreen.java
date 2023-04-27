@@ -211,7 +211,7 @@ public class GameScreen implements Screen {
             Rectangle block = iter.next();
             block.x -= (speed * Gdx.graphics.getDeltaTime());
 
-            if (block.overlaps(phoenix)) {
+            if (block.overlaps(phoenix) || phoenix.y < -64 || phoenix.y > 480) {
                 HighScore.separateHighscores(level);
                 pause();
                 game.setScreen((new DeathScreen(game, score, level)));
@@ -294,7 +294,7 @@ public class GameScreen implements Screen {
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) ) {
             frames = 23;
-            jumpSound.play();
+            jumpSound.play(1.0f);
         }
         if (frames > 0 && frames < 7){
             phoenix.y += 110 * Gdx.graphics.getDeltaTime();
@@ -312,10 +312,8 @@ public class GameScreen implements Screen {
         /**
          * Bird sinking time
          */
-            if (phoenix.y < 0)
-                phoenix.y = 0;
-            if (phoenix.y > 480 - 64)
-                phoenix.y = (float)480 - 64;
+
+
 
         backgroundMove -= 100 * Gdx.graphics.getDeltaTime();
         backgroundMove2 -= 100 * Gdx.graphics.getDeltaTime();
