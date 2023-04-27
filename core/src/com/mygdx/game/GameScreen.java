@@ -118,14 +118,14 @@ public class GameScreen implements Screen {
     }
 
     private void setTextures() {
-        phoenixImage = new Texture(Gdx.files.internal("Phoenix.gif"));
+
         longImage = new Texture(Gdx.files.internal("rectangleblue.png"));
-        background2 = new Texture(Gdx.files.internal("bgtest.png"));
+
         background = new Texture(Gdx.files.internal("bgreverse.png"));
         flap = new Texture(Gdx.files.internal("up.png"));
         glide = new Texture(Gdx.files.internal("down.png"));
-        cars = new Texture(Gdx.files.internal("cars.png"));
-        cars2 = new Texture(Gdx.files.internal("cars2.png"));
+        cars = new Texture(Gdx.files.internal("cars_1.png"));
+        cars2 = new Texture(Gdx.files.internal("cars_2.png"));
 //        box = new Texture(Gdx.files.internal("hitbox.png"));
     }
 
@@ -292,7 +292,7 @@ public class GameScreen implements Screen {
         /**
          * Input to jump, press space key, Playing jump sound also
          */
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && frames < 1) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) ) {
             frames = 23;
             jumpSound.play();
         }
