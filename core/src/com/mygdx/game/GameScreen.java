@@ -319,8 +319,8 @@ public class GameScreen implements Screen {
 
 
 
-        backgroundMove -= 100 * Gdx.graphics.getDeltaTime();
-        backgroundMove2 -= 100 * Gdx.graphics.getDeltaTime();
+        backgroundMove -= 300 * Gdx.graphics.getDeltaTime();
+        backgroundMove2 -= 300 * Gdx.graphics.getDeltaTime();
 
         if (TimeUtils.nanoTime() - lastBlock > spawnTime) {
             score = score + 100;
