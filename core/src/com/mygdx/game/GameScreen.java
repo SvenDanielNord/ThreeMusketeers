@@ -64,6 +64,7 @@ public class GameScreen implements Screen {
 
     boolean shouldFlap = false;
     private Sound jumpSound;
+    private Sound death;
 
 
     //highscore for this playing round
@@ -114,6 +115,7 @@ public class GameScreen implements Screen {
          * Creating jumping sound
          */
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("wingFlap.ogg"));
+        death = Gdx.audio.newSound(Gdx.files.internal("death.mp3"));
 
     }
 
@@ -212,9 +214,11 @@ public class GameScreen implements Screen {
             block.x -= (speed * Gdx.graphics.getDeltaTime());
 
             if (block.overlaps(phoenix) || phoenix.y < -64 || phoenix.y > 480) {
+                death.play(0.1F);
                 HighScore.separateHighscores(level);
                 pause();
                 game.setScreen((new DeathScreen(game, score, level)));
+
             }
             if (block.getX() < -150) {
                 iter.remove();
